@@ -1,0 +1,672 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="Support_Project.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=1480" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Ask Me Bet Support</title>
+    <link rel="icon" href="img/amb-logo-full.png" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/fontawesome.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/brands.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/solid.min.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <%--<link rel="stylesheet" href="css/pagination.css">--%>
+    <link rel="stylesheet" href="css/bootstrap-datepicker3.css" />
+    <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="css/pagination.css" rel="stylesheet" />
+    <style>
+        .badge {
+            position: absolute;
+            top: 10px;
+            border-radius: 50%;
+            background-color: red;
+            color: white;
+            margin-left: 7px;
+        }
+
+        .fa-user-circle:before {
+            background: none !important;
+            content: '\f2bd' !important;
+        }
+
+        .overflowHead {
+            width: 10em !important;
+            margin: 0px !important;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="fixed-sn">
+    <div id="myModalLoad" class="modal" data-backdrop="static" data-keyboard="false" style="z-index: 9999">
+        <div class="d-flex justify-content-center" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #17172C !important;">
+            <div class="spinner-border" role="status" style="width: 7rem; height: 7rem; font-size: 4rem;">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+    <form runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+        <div class="wrapper container" style="position: initial !important; width: 1450px !important; max-width: 1450px !important;">
+            <header>
+                <!-- Header navigation -->
+                <nav class="navbar navbar-light white p-0 fixed-top">
+                    <a class="navbar-brand logo">
+                        <img src="../img/amb-logo-full.png" id="imgLogin" style="width: 180px; height: auto;">
+                    </a>
+                    <div class="navbar-panel-box">
+                        <div class="navbar-panel d-flex justify-content-between">
+                            <div class="d-flex align-items-center nav-top" style="margin-left: 10px;">
+                                <div class="row">
+                                    <a class="nav-link overflow ellipsis" aria-expanded="false" id="nameLogin" href="../Menu_Profile/Profile.aspx">
+                                        <i class="far fa-user-circle"></i>
+                                    </a>
+                                    <a class="nav-link overflowHead ellipsis" aria-expanded="false" id="position" style="margin-left: 1.5rem !important;"></a>
+                                    <a class="nav-link overflowHead ellipsis" aria-expanded="false" id="agentname" style="margin-left: 1.5rem !important;"></a>
+                                    <a class="nav-link overflowHead ellipsis" aria-expanded="false" id="notification" style="display: inline-flex; margin-left: 1.5rem !important;" href="../Menu_Profile/MyOpenTask.aspx"></a>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center nav-top-links">
+                                <%--<button class="btn btn-yellow font-weight-bold m-0 px-3 py-2 z-depth-0 waves-effect btnMenu" style="margin-right: 20px !important;" type="button" onclick="Emergency()" set-lan="text:Emergency"></button>--%>
+                                <a onclick="ModalLanguage();" id="txtLan">
+                                    <img src="../img/Flag/usa.png" style="width: 20px; margin-right: .4rem;" />English
+                                </a>
+                                <div id="divblock" style="display: none;">
+                                    <div style="border-bottom: 1px #ddd solid; padding: 3px;">
+                                        <a onclick="SetLanguage('Thai');">
+                                            <img src="../img/Flag/thailand.png" style="width: 20px;" />&emsp;ไทย
+                                        </a>
+                                    </div>
+                                    <div style="padding: 3px;">
+                                        <a onclick="SetLanguage('English');">
+                                            <img src="../img/Flag/usa.png" style="width: 20px;" />&emsp;English
+                                        </a>
+                                    </div>
+                                </div>
+                                <a class="nav-link" set-lan="html:Log Out" onclick="LogOut();"></a>
+                            </div>
+                        </div>
+                        <div class="simple-marquee-container" style="background-color: #fde60c;">
+                            <marquee class="marqueetxt" style="color: #fff; padding-top: 3px;"></marquee>
+                        </div>
+                    </div>
+                </nav>
+                <!--/. Header navigation -->
+                <!-- Sidebar navigation -->
+                <div id="slide-out" class="side-nav white fixed wide side-nav-light z-depth-0">
+                    <ul class="custom-scrollbar">
+                        <!-- Side navigation links -->
+                        <li>
+                            <ul class="accordion collapsible collapsible-accordion">
+                                <li id="menuChatBot" class="menuMain" style="display: none;">
+                                    <a href="../Menu_ChatBot/ChatBot.aspx" class="collapsible-header waves-effect"><i class="sv-slim-icon fas fa-dashboard"></i>
+                                        <label class="main">Chat Bot</label>
+                                    </a>
+                                </li>
+                                <li id="menuDashboard" class="menuMain">
+                                    <a class="collapsible-header waves-effect arrow-r">
+                                        <i class="sv-slim-icon fas fa-chart-area" style="color: #debe75; font-size: 12pt;"></i>
+                                        <label class="main" set-lan="text:Dashboard"></label>
+                                        <i class="fas fa-angle-down rotate-icon"></i>
+                                    </a>
+                                    <div class="collapsible-body">
+                                        <ul>
+                                            <li id="menuDashboardMain"><a href="../Menu_Dashboard/Dashboard.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Dashboard"></span></a>
+                                            </li>
+                                            <li id="menuDashboardReport"><a href="../Menu_Dashboard/Report.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Task Tracking"></span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li id="menuAccount" class="menuMain">
+                                    <a class="collapsible-header waves-effect arrow-r">
+                                        <i class="sv-slim-icon fas fa-user-alt" style="color: #debe75; font-size: 11pt;"></i>
+                                        <label class="main" set-lan="text:Account"></label>
+                                        <i class="fas fa-angle-down rotate-icon"></i>
+                                    </a>
+                                    <div class="collapsible-body">
+                                        <ul>
+                                            <li id="menuProfile"><a href="../Menu_Profile/Profile.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Profile"></span></a>
+                                            </li>
+                                            <li id="menuPassword"><a href="../Menu_Profile/Password.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Password"></span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li id="menuSportbook" class="menuMain">
+                                    <a href="../Menu_Sportbook/Sportbook.aspx" class="collapsible-header waves-effect"><i class="sv-slim-icon fas fa-dice-d20" style="color: #debe75; font-size: 12pt;"></i>
+                                        <label class="main" set-lan="text:Sportbook"></label>
+                                    </a>
+                                </li>
+                                <li id="menuFootball" class="menuMain">
+                                    <a href="../Menu_Football/Report.aspx" class="collapsible-header waves-effect"><i class="sv-slim-icon fas fa-futbol" style="color: #debe75; font-size: 12pt;"></i>
+                                        <label class="main" set-lan="text:Football"></label>
+                                    </a>
+                                </li>
+                                <li id="menuCasino" class="menuMain">
+                                    <a href="../Menu_Casino/Report.aspx" class="collapsible-header waves-effect"><i class="sv-slim-icon fas fa-dice" style="color: #debe75; font-size: 11pt;"></i>
+                                        <label class="main" set-lan="text:Casino"></label>
+                                    </a>
+                                </li>
+                                <li id="menuSlot" class="menuMain">
+                                    <a href="../Menu_Slot/Report.aspx" class="collapsible-header waves-effect"><i class="sv-slim-icon fas fa-gamepad" style="color: #debe75; font-size: 11pt;"></i>
+                                        <label class="main" set-lan="text:Slot"></label>
+                                    </a>
+                                </li>
+                                <li id="menuPoker" class="menuMain">
+                                    <a href="<%--../Menu_Poker/Report.aspx--%>" class="collapsible-header waves-effect"><i class="sv-slim-icon fas fa-heart" style="color: #debe75; font-size: 11pt;"></i>
+                                        <label class="main" set-lan="text:Poker"></label>
+                                    </a>
+                                </li>
+                                <li id="menuAmbbo" class="menuMain">
+                                    <a class="collapsible-header waves-effect arrow-r">
+                                        <i class="sv-slim-icon fas fa-folder-open" style="color: #debe75; font-size: 11pt;"></i>
+                                        <label class="main" set-lan="text:Ambbo"></label>
+                                        <i class="fas fa-angle-down rotate-icon"></i>
+                                    </a>
+                                    <div class="collapsible-body">
+                                        <ul>
+                                            <li id="menuAmbboPrefix"><a href="../Menu_AMBBO/PrefixDetail.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Prefix Detail"></span></a>
+                                            </li>
+                                            <li id="menuAmbboReport"><a href="../Menu_AMBBO/Report.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Report"></span></a>
+                                            </li>
+                                            <li id="menuAmbboReportConclude"><a href="../Menu_AMBBO/ReportConclude.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Report Conclude"></span></a>
+                                            </li>
+                                            <li id="menuAmbboPromotion"><a href="../Menu_AMBBO/Promotion.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Promotion"></span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li id="menuBalance" class="menuMain">
+                                    <a href="../Menu_Balance/CheckBalance.aspx" class="collapsible-header waves-effect"><i class="sv-slim-icon fas fa-search-dollar" style="color: #debe75; font-size: 11pt;"></i>
+                                        <label class="main" set-lan="text:Check Balance"></label>
+                                    </a>
+                                </li>
+                                <li id="menuManagementMain" class="menuMain">
+                                    <a class="collapsible-header waves-effect arrow-r">
+                                        <i class="sv-slim-icon fas fa-users" style="color: #debe75; font-size: 11pt;"></i>
+                                        <label class="main" set-lan="text:Management"></label>
+                                        <i class="fas fa-angle-down rotate-icon"></i>
+                                    </a>
+                                    <div class="collapsible-body">
+                                        <ul>
+                                            <li id="menuManagementShareAdd"><a href="../Menu_Management_Main/Company_Add.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Add Company"></span></a>
+                                            </li>
+                                            <li id="menuManagementShare"><a href="../Menu_Management_Main/Company.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Company List"></span></a>
+                                            </li>
+                                            <li id="menuManagementAgentAdd" style="display: none;"><a href="../Menu_Management_Main/Agent_Add.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Add Agent"></span></a>
+                                            </li>
+                                            <li id="menuManagementAgent" style="display: none;"><a href="../Menu_Management_Main/Agent.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Agent List"></span></a>
+                                            </li>
+                                            <li id="menuManagementMemberAdd"><a href="../Menu_Management_Main/Member_Add.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Add Account"></span></a>
+                                            </li>
+                                            <li id="menuManagementMember"><a href="../Menu_Management_Main/Member.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Account List"></span></a>
+                                            </li>
+                                            <li id="menuManagementSubAccountAdd"><a href="../Menu_Management_Main/SubAccount_Add.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Add Sub Account"></span></a>
+                                            </li>
+                                            <li id="menuManagementSubAccount"><a href="../Menu_Management_Main/SubAccount.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Sub Account List"></span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li id="menuTaskCalendar" class="menuMain">
+                                    <a class="collapsible-header waves-effect arrow-r">
+                                        <i class="sv-slim-icon fas fa-calendar-alt" style="color: #debe75; font-size: 11pt;"></i>
+                                        <label class="main" set-lan="text:Report"></label>
+                                        <i class="fas fa-angle-down rotate-icon"></i>
+                                    </a>
+                                    <div class="collapsible-body">
+                                        <ul>
+                                            <li id="menuTaskCalendarTimeline"><a href="../Menu_TaskCalendar/Timeline_Add.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Add Leave"></span></a>
+                                            </li>
+                                            <li id="menuTaskCalendarTimelineAll"><a href="../Menu_TaskCalendar/Timeline.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Leave"></span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li id="menuAnnouncement" class="menuMain">
+                                    <a class="collapsible-header waves-effect arrow-r">
+                                        <i class="sv-slim-icon fas fa-bullhorn" style="color: #debe75; font-size: 11pt;"></i>
+                                        <label class="main" set-lan="text:Announcement"></label>
+                                        <i class="fas fa-angle-down rotate-icon"></i>
+                                    </a>
+                                    <div class="collapsible-body">
+                                        <ul>
+                                            <li id="menuAnnouncementAdd"><a href="../Menu_Announcement/Announcement_Add.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Add Announcement"></span></a>
+                                            </li>
+                                            <li id="menuAnnouncementAll"><a href="../Menu_Announcement/Announcement.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Announcement"></span></a>
+                                            </li>
+                                            <li id="menuAnnouncementAddLine"><a href="../Menu_Announcement/AnnouncementLine_Add.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Add Announcement Line"></span></a>
+                                            </li>
+                                            <li id="menuAnnouncementLine"><a href="../Menu_Announcement/AnnouncementLine.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Announcement Line"></span></a>
+                                            </li>
+                                            <li id="menuLineTokenAdd"><a href="../Menu_Announcement/LineToken_Add.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Add Line Token"></span></a>
+                                            </li>
+                                            <li id="menuLineToken"><a href="../Menu_Announcement/LineToken.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Line Token"></span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li id="menuFeedback" class="menuMain">
+                                    <a class="collapsible-header waves-effect arrow-r">
+                                        <i class="sv-slim-icon fas fa-lightbulb" style="color: #debe75; font-size: 11pt;"></i>
+                                        <label class="main" set-lan="text:Feedback"></label>
+                                        <i class="fas fa-angle-down rotate-icon"></i>
+                                    </a>
+                                    <div class="collapsible-body">
+                                        <ul>
+                                            <li id="menuFeedbackAdd"><a href="../Menu_Feedback/Feedback_Add.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Add Feedback"></span></a>
+                                            </li>
+                                            <li id="menuFeedbackAll"><a href="../Menu_Feedback/Feedback.aspx" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Feedback"></span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li id="menuHowToUse" class="menuMain">
+                                    <a class="collapsible-header waves-effect arrow-r">
+                                        <i class="sv-slim-icon fas fa-book" style="color: #debe75; font-size: 11pt;"></i>
+                                        <label class="main" set-lan="text:How to use"></label>
+                                        <i class="fas fa-angle-down rotate-icon"></i>
+                                    </a>
+                                    <div class="collapsible-body">
+                                        <ul>
+                                            <li id="menuHowToUseEBook"><a onclick="getEBook();" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:E-Book"></span></a>
+                                            </li>
+                                            <li id="menuHowToUseVDO"><a href="#" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:Video"></span></a>
+                                            </li>
+                                            <li id="menuHowToUsePDF"><a onclick="getManual();" class="waves-effect">
+                                                <span class="sv-normal submain" set-lan="text:PDF"></span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--/. Side navigation links -->
+                    </ul>
+                    <div class="sidenav-bg rgba-white-strong"></div>
+                </div>
+                <!--/. Sidebar navigation -->
+            </header>
+            <main>
+                <div class="body-content">
+                    <asp:ContentPlaceHolder ID="MainContent" runat="server">
+                    </asp:ContentPlaceHolder>
+                    <div class="modal fade" id="modalAlertEmer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header text-center">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body mx-3 text-center">
+                                    <label id="lbAlert"></label>
+                                </div>
+                                <div class="modal-footer d-flex justify-content-center">
+                                    <button type="button" class="btn btn-yellow font-weight-bold" data-dismiss="modal" aria-label="Close" set-lan="text:Close"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <asp:Button ID="btnLogout" class="btn btn-lg btn-yellow font-weight-bold btn-block" OnClick="Logout_click" runat="server" Text="Logout" Style="display: none;" />
+        <asp:Button ID="btnEmergency" class="btn btn-lg btn-yellow font-weight-bold btn-block" OnClick="Emergency_click" runat="server" Text="Emergency" Style="display: none;" />
+        <asp:Button ID="btnLogout2" class="btn btn-lg btn-yellow font-weight-bold btn-block" OnClick="Logout2_click" runat="server" Text="Logout" Style="display: none;" />
+        <asp:HiddenField ID="LoginUser" runat="Server"></asp:HiddenField>
+        <asp:HiddenField ID="LoginID" runat="Server"></asp:HiddenField>
+        <asp:HiddenField ID="LoginPosi" runat="Server"></asp:HiddenField>
+        <asp:HiddenField ID="Lat" runat="Server"></asp:HiddenField>
+        <asp:HiddenField ID="Long" runat="Server"></asp:HiddenField>
+        <asp:HiddenField ID="ShareIDLogin" runat="Server"></asp:HiddenField>
+        <asp:HiddenField ID="AgentIDLogin" runat="Server"></asp:HiddenField>
+        <asp:HiddenField ID="AgentName" runat="Server"></asp:HiddenField>
+        <asp:HiddenField ID="ToeknID" runat="Server"></asp:HiddenField>
+        <asp:HiddenField ID="SubAccount" runat="Server"></asp:HiddenField>
+    </form>
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="../js/mdb.min.js"></script>
+    <!-- ACE core JavaScript -->
+    <script type="text/javascript" src="../js/ace.min.js"></script>
+    <!-- Language core JavaScript -->
+    <script type="text/javascript" src="../js/language_Login.js"></script>
+    <script type="text/javascript" src="../js/bootstrap-datetimepicker.min.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+    <script>
+        var role = "";
+        var token;
+        $(document).ready(function () {
+            getNoti();
+
+            document.getElementById('nameLogin').innerHTML = "<i class='fas fa-user-circle' style='font-size: 14pt;'></i>" + $("#<%=LoginUser.ClientID%>").val();
+            $('#nameLogin').prop('title', $("#<%=LoginUser.ClientID%>").val());
+
+            document.getElementById('position').innerHTML = "<img src='../img/level.png' style='width: 15px;' /><span style='margin-left: .5rem;' set-lan='text:" + $("#<%=LoginPosi.ClientID%>").val() + "'></span>";
+            document.getElementById('agentname').innerHTML = "<img src='../img/agent.png' style='width: 23px;' /><span style='margin-left: .5rem;'>" + $("#<%=AgentName.ClientID%>").val() + "</span>";
+
+            role = $("#<%=LoginPosi.ClientID%>").val();
+
+            if ($("#<%=AgentIDLogin.ClientID%>").val() != "0" && $("#<%=AgentIDLogin.ClientID%>").val() != "1") {
+                $("#menuSportbook, #menuFootball, #menuCasino, #menuSlot, #menuPoker, #menuAmbbo, #menuBalance, #menuTaskCalendar").remove();
+            }
+
+            if ($("#<%=LoginPosi.ClientID%>").val() == "Super User" || $("#<%=LoginPosi.ClientID%>").val() == "Master") {
+                $("#menuManagementAgent, #menuManagementAgentAdd").css("display", "initial");
+            }
+
+            if ($("#<%=ShareIDLogin.ClientID%>").val() != "0" && $("#<%=AgentIDLogin.ClientID%>").val() != "0") {
+                $("#menuManagementShare, #menuManagementShareAdd").remove();
+            }
+
+            if ($("#<%=LoginPosi.ClientID%>").val() != "Super User" && $("#<%=LoginPosi.ClientID%>").val() != "Master") {
+                $("#menuAnnouncementAddLine, #menuAnnouncementLine, #menuAnnouncementAdd, #menuManagementMemberAdd").css("display", "none");
+            }
+
+            if ($("#<%=LoginPosi.ClientID%>").val() == "Super User" || $("#<%=LoginPosi.ClientID%>").val() == "Master") {
+                if ($("#<%=AgentIDLogin.ClientID%>").val() != "0" && $("#<%=AgentIDLogin.ClientID%>").val() != "1") {
+                    $("#menuAnnouncementAddLine, #menuAnnouncementLine, #menuAnnouncementAdd").remove();
+                }
+            }
+
+            if ($("#<%=SubAccount.ClientID%>").val() == "True") {
+                $("#menuManagementSubAccountAdd, #menuManagementSubAccount").css("display", "none");
+            }
+
+            token = localStorage.getItem("Token");
+
+            $('#divblock').hide();
+            $('#txtLan').click(function (e) {
+                e.stopPropagation();
+                $('#divblock').slideToggle();
+            });
+            $('#divblock').click(function (e) {
+                e.stopPropagation();
+            });
+            $(document).click(function () {
+                $('#divblock').slideUp();
+            });
+
+            if (localStorage.getItem("Language") == "Thai") {
+                $("#txtLan").html("<img src='../img/Flag/thailand.png' style='width: 20px; margin-right: .4rem;' />ไทย");
+            }
+            else if (localStorage.getItem("Language") == "English") {
+                $("#txtLan").html("<img src='../img/Flag/usa.png' style='width: 20px; margin-right: .4rem;' />English");
+            }
+            else if (localStorage.getItem("Language") == "Chinese") {
+                $("#txtLan").html("<img src='../img/Flag/china.png' style='width: 20px; margin-right: .4rem;' />中文");
+            }
+
+            $('.menuMain').each(function (i, obj) {
+                if ($(obj).is(":hidden")) {
+                    $(obj).remove();
+                }
+            });
+
+            setInterval(function () { getNoti(); }, 5000);
+            //setInterval(function () { NotificationPop(); }, 20000);
+            SetLan(localStorage.getItem("Language"));
+        });
+
+        function NotificationPop() {
+            //createNotification('Askmebet Support', 'You have 1 notifications.', 'http://18.138.158.140/Support/img/amb-logo-full.png');
+            if (Notification.permission === "granted") {
+                createNotification('Wow!', 'You have 1 notification.', 'http://18.138.158.140/Support/img/amb-logo-full.png');
+            }
+            else {
+                Notification.requestPermission(permission => {
+                    if (permission === 'granted') {
+                        createNotification('Wow!', 'You have 1 notification.', 'http://18.138.158.140/Support/img/amb-logo-full.png');
+                    }
+                });
+            }
+
+            //navigator.serviceWorker.register('sw.js');
+            //Notification.requestPermission(function (result) {
+            //    if (result === 'granted') {
+            //        navigator.serviceWorker.ready.then(function (registration) {
+            //            registration.showNotification('Vibration Sample', {
+            //                body: 'Buzz! Buzz!',
+            //                icon: '../images/touch/chrome-touch-icon-192x192.png',
+            //                vibrate: [200, 100, 200, 100, 200, 100, 200],
+            //                tag: 'vibration-sample'
+            //            });
+            //        });
+            //    }
+            //});
+        }
+
+        function createNotification(title, text, icon) {
+            const noti = new Notification(title, {
+                body: text
+                //icon
+            });
+
+            noti.onclick = function () {
+                window.open("https://dev-support.askmebet.co/Support/Menu_Profile/MyOpenTask");
+            };
+        }
+
+        function getNoti() {
+            var dataAdd = new Object();
+            dataAdd.pUserID = parseInt($("#<%=LoginID.ClientID%>").val());
+            $.ajax({
+                url: '../WebService.asmx/GetNotification',
+                method: 'post',
+                data: JSON.stringify(dataAdd),
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    var total = JSON.parse(data.d);
+
+                    if (total[0].token_id.toString() == $("#<%=ToeknID.ClientID%>").val().toString()) {
+                        if (parseInt(total[0].count_noti_user) > 0) {
+                            if (localStorage.getItem("Language") == "Thai") {
+                                document.getElementById('notification').innerHTML = "<i class='fas fa-bell' style='margin-top: 4px;'></i><span class='badge'>" + total[0].count_noti_user + "</span>&emsp;<span set-lan='text:Notification'>การแจ้งเตือน</span>";
+                            }
+                            else if (localStorage.getItem("Language") == "English") {
+                                document.getElementById('notification').innerHTML = "<i class='fas fa-bell' style='margin-top: 4px;'></i><span class='badge'>" + total[0].count_noti_user + "</span>&emsp;<span set-lan='text:Notification'>Notification</span>";
+                            }
+                        }
+                        else {
+                            if (localStorage.getItem("Language") == "Thai") {
+                                document.getElementById('notification').innerHTML = "<i class='fas fa-bell' style='margin-top: 4px;'></i><span style='margin-left: .5rem;' set-lan='text:Notification'>การแจ้งเตือน</span>";
+                            }
+                            else if (localStorage.getItem("Language") == "English") {
+                                document.getElementById('notification').innerHTML = "<i class='fas fa-bell' style='margin-top: 4px;'></i><span style='margin-left: .5rem;' set-lan='text:Notification'>Notification</span>";
+                            }
+                        }
+                        //SetLan(localStorage.getItem("Language"));
+
+                        //if (parseInt(total[0].count_noti_user) > 0) {
+                        //    createNotification('Askmebet Support', 'You have ' + total[0].count_noti_user + ' notifications.', 'http://18.138.158.140/Support/img/amb-logo-full.png');
+                        //}
+                    }
+                    else {
+                        LogOut2();
+                    }
+                },
+                error: function (err) {
+                    //document.getElementById('lbAlert').innerHTML = "Error : GetNotification";
+                    //$("#myModalLoad").modal('hide');
+                    //$('#modalAlert').modal('show');
+                    console.log(err);
+                }
+            });
+        }
+
+        function alertModalEmer(txtAlert) {
+            document.getElementById("lbAlert").setAttribute("set-lan", "text:" + txtAlert + "");
+            SetLan(localStorage.getItem('Language'));
+            $('#modalAlertEmer').modal('show');
+            $("#myModalLoad").modal('hide');
+
+            if (txtAlert == "Lock agent success.") {
+                setTimeout(function () { window.location.href = "../Login.aspx"; }, 1500);
+            }
+            else {
+                setTimeout(function () { $('#modalAlertEmer').modal('hide') }, 2000);
+            }
+        }
+
+        function ModalLanguage() {
+            $("#modalLanguage").modal();
+        }
+
+        function showmodalNoti() {
+            $('#modalGetAllNotification').modal();
+            $("#myModalLoad").modal("hide");
+        }
+
+        function ModalLanguage() {
+            $("#modalLanguage").modal();
+        }
+
+        function SetLanguage(ele) {
+            SetLan(ele);
+            if (ele == "Thai") {
+                $("#txtLan").html("<img src='../img/Flag/thailand.png' style='width: 20px; margin-right: .4rem;' />ไทย");
+            }
+            else if (ele == "English") {
+                $("#txtLan").html("<img src='../img/Flag/usa.png' style='width: 20px; margin-right: .4rem;' />English");
+            }
+            else if (ele == "Chinese") {
+                $("#txtLan").html("<img src='../img/Flag/china.png' style='width: 20px; margin-right: .4rem;' />中文");
+            }
+
+            localStorage.setItem("Language", ele);
+
+            $('#divblock').slideUp();
+
+            var path = window.location.pathname;
+            var page = path.split("/").pop();
+            if (page == "Dashboard") {
+                getGraph();
+            }
+        }
+
+        function getManual() {
+            if (localStorage.getItem("Language") == "Thai") {
+                window.open('../FileManual/How%20to%20use%20support%20system%20TH.pdf', '_blank');
+            }
+            else if (localStorage.getItem("Language") == "English") {
+                window.open('../FileManual/How%20to%20use%20support%20system%20ENG.pdf', '_blank');
+            }
+        }
+
+        function getEBook() {
+            if (localStorage.getItem("Language") == "Thai") {
+                window.open('../EBookTH/indexs_TH.html', '_blank');
+            }
+            else if (localStorage.getItem("Language") == "English") {
+                window.open('../EBookEN/index.html', '_blank');
+            }
+        }
+
+        function LogOut() {
+            localStorage.clear();
+            $("#<%=btnLogout.ClientID%>").click();
+       }
+
+       function Emergency() {
+           $("#<%=btnEmergency.ClientID%>").click();
+        }
+
+        function LogOut2() {
+            localStorage.clear();
+            $("#<%=btnLogout2.ClientID%>").click();
+       }
+
+       function clsAlphaNoOnly(e) {  // Accept only alpha numerics, no special characters 
+           var regex = new RegExp("^[a-zA-Z0-9]+$");
+           var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+           if (regex.test(str)) {
+               return true;
+           }
+
+           e.preventDefault();
+           return false;
+       }
+
+       function clsAlphaTHNoOnly(e) {  // Accept only alpha numerics, no special characters 
+           var regex = new RegExp("^[ก-๏a-zA-Z0-9]+$");
+           var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+           if (regex.test(str)) {
+               return true;
+           }
+
+           e.preventDefault();
+           return false;
+       }
+
+       function Comma(Num) { //function to add commas to textboxes
+           if (parseInt(Num) != 0) {
+               Num += '';
+               Num = Num.replace(',', ''); Num = Num.replace(',', ''); Num = Num.replace(',', '');
+               Num = Num.replace(',', ''); Num = Num.replace(',', ''); Num = Num.replace(',', '');
+               x = Num.split('.');
+               x1 = x[0];
+               x2 = x.length > 1 ? '.' + x[1] : '';
+               var rgx = /(\d+)(\d{3})/;
+               while (rgx.test(x1))
+                   x1 = x1.replace(rgx, '$1' + ',' + '$2');
+               return x1 + x2;
+           }
+           else {
+               return "";
+           }
+       }
+
+       function isNumberKey(evt) {
+           var charCode = (evt.which) ? evt.which : event.keyCode
+           if (charCode > 31 && (charCode < 48 || charCode > 57))
+               return false;
+           return true;
+       }
+    </script>
+    <asp:ContentPlaceHolder ID="MainScript" runat="server"></asp:ContentPlaceHolder>
+</body>
+</html>
