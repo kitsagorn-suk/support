@@ -158,6 +158,20 @@ namespace Support_Project.Menu_Management_Main
             }
         }
 
+        public void ReQR_click(Object sender, EventArgs e)
+        {
+            int _idDel = _sql.ReQR(int.Parse(IDReQR.Value));
+            if (_idDel != 0)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Reset QR success.');", true);
+                SearchData();
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+            }
+        }
+
         public void EditMember_click(Object sender, EventArgs e)
         {
             int _idChk = _sql.CheckUsername(username.Text, int.Parse(IDEdit.Value));
@@ -309,16 +323,16 @@ namespace Support_Project.Menu_Management_Main
                     {
                         if (row["create_by"].ToString() == Request.Cookies["Keys"]["ID"] || Request.Cookies["Keys"]["ID"] == "2")
                         {
-                            sb.Append("<td style='text-align: center;'><a class='link' attr-fullname='" + row["fullname"].ToString() + "' attr-id='" + row["id"].ToString() + "' attr-username='" + row["username"].ToString() + "' attr-password='" + Utility.Decryptdata(row["password"].ToString()) + "' attr-contact='" + row["contact"].ToString() + "' attr-role='" + row["role_name"].ToString() + "' attr-agent='" + row["agent_id"].ToString() + "' attr-share='" + row["shareholder_id"].ToString() + "' attr-status='" + row["is_active"].ToString() + "' onclick='viewEdit(this);'><i class='fas fa-pencil-alt'></i></a>&emsp;<a class='link' onclick='viewDelete(\"" + row["id"].ToString() + "\");'><i class='fas fa-trash'></i></a></td>");
+                            sb.Append("<td style='text-align: center;'><a class='link' onclick='viewReQR(\"" + row["id"].ToString() + "\");'><i class='fas fa-sync-alt'></i></a>&emsp;<a class='link' attr-fullname='" + row["fullname"].ToString() + "' attr-id='" + row["id"].ToString() + "' attr-username='" + row["username"].ToString() + "' attr-password='" + Utility.Decryptdata(row["password"].ToString()) + "' attr-contact='" + row["contact"].ToString() + "' attr-role='" + row["role_name"].ToString() + "' attr-agent='" + row["agent_id"].ToString() + "' attr-share='" + row["shareholder_id"].ToString() + "' attr-status='" + row["is_active"].ToString() + "' onclick='viewEdit(this);'><i class='fas fa-pencil-alt'></i></a>&emsp;<a class='link' onclick='viewDelete(\"" + row["id"].ToString() + "\");'><i class='fas fa-trash'></i></a></td>");
                         }
                         else
                         {
-                            sb.Append("<td style='text-align: center;'><a class='link disabled-link'><i class='fas fa-pencil-alt'></i></a>&emsp;<a class='link disabled-link'><i class='fas fa-trash'></i></a></td>");
+                            sb.Append("<td style='text-align: center;'><a class='link disabled-link'><i class='fas fa-sync-alt'></i></a>&emsp;<a class='link disabled-link'><i class='fas fa-pencil-alt'></i></a>&emsp;<a class='link disabled-link'><i class='fas fa-trash'></i></a></td>");
                         }
                     }
                     else
                     {
-                        sb.Append("<td style='text-align: center;'><a class='link disabled-link'><i class='fas fa-pencil-alt'></i></a>&emsp;<a class='link disabled-link'><i class='fas fa-trash'></i></a></td>");
+                        sb.Append("<td style='text-align: center;'><a class='link disabled-link'><i class='fas fa-sync-alt'></i></a>&emsp;<a class='link disabled-link'><i class='fas fa-pencil-alt'></i></a>&emsp;<a class='link disabled-link'><i class='fas fa-trash'></i></a></td>");
                     }
                     sb.Append("</tr>");
                     no++;

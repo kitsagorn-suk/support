@@ -399,10 +399,10 @@ namespace Support_Project.Menu_Dasboard
             ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "setDataLanguage();", true);
             //ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "$('#myModalLoad').modal('hide');", true);
 
-            //if (eventPaging.Value != "paging")
-            //{
-            //    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "GetData(" + _idTotal.ToString() + ");", true);
-            //}
+            if (eventPaging.Value != "paging")
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "GetData(" + _idTotal.ToString() + ");", true);
+            }
         }
 
         private void BindCategory()

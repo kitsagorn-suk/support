@@ -103,6 +103,15 @@ namespace Support_Project.Menu_Management_Main {
         protected global::System.Web.UI.WebControls.Button btnDelete;
         
         /// <summary>
+        /// btnReQR control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnReQR;
+        
+        /// <summary>
         /// btnGetddlCompany control.
         /// </summary>
         /// <remarks>
@@ -299,6 +308,15 @@ namespace Support_Project.Menu_Management_Main {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField IDDelete;
+        
+        /// <summary>
+        /// IDReQR control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField IDReQR;
         
         /// <summary>
         /// IDEdit control.

@@ -475,4 +475,3 @@ C:\Support_PT\Support_Project\bin\Microsoft.Owin.Security.OAuth.xml
 C:\Support_PT\Support_Project\bin\Google.Authenticator.dll
 C:\Support_PT\Support_Project\bin\QRCoder.dll
 C:\Support_PT\Support_Project\bin\Google.Authenticator.pdb
-C:\Support_PT\Support_Project\obj\Debug\Support_Project.csprojResolveAssemblyReference.cache

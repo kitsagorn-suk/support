@@ -1423,14 +1423,14 @@
             }
 
             if (startDateSearch == "" && endDateSearch == "") {
-                var txt1 = $("#startdate").val() + " " + $('#starttime').val() + ":00";
-                var txt2 = $("#todate").val() + " " + $('#totime').val() + ":00";
+                var txt1 = $("#startdate").val() + " " + $('#starttime').val() + ":59";
+                var txt2 = $("#todate").val() + " " + $('#totime').val() + ":59";
                 $("#<%=searchDateStart.ClientID%>").val(txt1);
                 $("#<%=searchDateTo.ClientID%>").val(txt2);
             }
             else {
-                var txt1 = startDateSearch + " " + $('#starttime').val() + ":00";
-                var txt2 = endDateSearch + " " + $('#totime').val() + ":00";
+                var txt1 = startDateSearch + " " + $('#starttime').val() + ":59";
+                var txt2 = endDateSearch + " " + $('#totime').val() + ":59";
                 $("#<%=searchDateStart.ClientID%>").val(txt1);
                 $("#<%=searchDateTo.ClientID%>").val(txt2);
                 startDateSearch = "";
@@ -1440,8 +1440,8 @@
             $("#myModalLoad").modal();
             $("#<%=eventPaging.ClientID%>").val(event);
 
-            var dateOne = $("#startdate").val() + " " + $("#starttime").val() + ":00";
-            var dateTwo = $("#todate").val() + " " + $("#totime").val() + ":00";
+            var dateOne = $("#startdate").val() + " " + $("#starttime").val() + ":59";
+            var dateTwo = $("#todate").val() + " " + $("#totime").val() + ":59";
             var date1 = Date.parse(dateOne);
             var date2 = Date.parse(dateTwo);
             if (date1 > date2) {
@@ -1704,7 +1704,7 @@ function SavePickupDashboard() {
     $("#myModalLoad").modal();
     var date = $("#pickupdate").val();
     var time = $("#pickuptime").val();
-    var totalDate = date + " " + time + ":00";
+    var totalDate = date + " " + time + ":59";
     $("#<%=pickupDate.ClientID%>").val(totalDate);
             $("#<%=btnAddPickupDashboard.ClientID%>").click();
         }

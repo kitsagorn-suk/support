@@ -1419,6 +1419,29 @@ namespace Support_Project.core
             return id;
         }
 
+        public int ReQR(int pUserID)
+        {
+            int id = 0;
+
+            DataTable table = new DataTable();
+            SQLCustomExecute sql = new SQLCustomExecute("exec reset_qrcode @pUserID");
+
+            SqlParameter paramUserID = new SqlParameter(@"pUserID", SqlDbType.Int);
+            paramUserID.Direction = ParameterDirection.Input;
+            paramUserID.Value = pUserID;
+
+            sql.Parameters.Add(paramUserID);
+
+            table = sql.executeQueryWithReturnTable();
+
+            if (table != null && table.Rows.Count > 0)
+            {
+                DataRow dr = table.Rows[0];
+                id = Convert.ToInt32(dr["id"]);
+            }
+            return id;
+        }
+
         public int EditMember(int pUserID, string pUserName, string pPassword, int pRole, string pContact, int pUpdateBy, int pIsActive, string pFullName, int pShareHolderID, int pAgentID)
         {
             int id = 0;

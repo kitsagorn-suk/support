@@ -22,18 +22,18 @@ namespace Support_Project.Menu_Dashboard
         {
             if (!IsPostBack)
             {
-                string[] cookies = Request.Cookies.AllKeys;
-                bool status = false;
-                foreach (string cookie in cookies)
-                {
-                    if (cookie.ToString() == "Keys")
-                    {
-                        status = true;
-                    }
-                }
+                //string[] cookies = Request.Cookies.AllKeys;
+                //bool status = false;
+                //foreach (string cookie in cookies)
+                //{
+                //    if (cookie.ToString() == "Keys")
+                //    {
+                //        status = true;
+                //    }
+                //}
 
-                if (status == true)
-                {
+                //if (status == true)
+                //{
                     MyTask.Value = "0";
                     CategorySearch.Value = "0";
                     searchDateStart.Value = DateTime.Now.ToString("yyyy-MM-dd") + " 00:00:00";
@@ -44,11 +44,11 @@ namespace Support_Project.Menu_Dashboard
                     GetAllReportDashboard();
                     GetAllReportDashboardToday();
                     GetAnnouncement();
-                }
-                else
-                {
-                    Response.Redirect("../Login.aspx");
-                }
+                //}
+                //else
+                //{
+                //    Response.Redirect("../Login.aspx");
+                //}
             }
         }
 

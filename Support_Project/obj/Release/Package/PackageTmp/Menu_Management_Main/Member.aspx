@@ -184,6 +184,7 @@
             </div>
             <asp:Button ID="btnEditMember" class="btn btn-lg btn-yellow font-weight-bold btn-block" OnClick="EditMember_click" runat="server" Text="Add" Style="display: none;" />
             <asp:Button ID="btnDelete" runat="server" Text="Search" OnClick="DeleteMember_click" autopostback="false" Style="display: none;" />
+            <asp:Button ID="btnReQR" runat="server" Text="Search" OnClick="ReQR_click" autopostback="false" Style="display: none;" />
             <asp:Button ID="btnGetddlCompany" class="btn btn-lg btn-yellow font-weight-bold btn-block" OnClick="GetSharholder_click" runat="server" Text="Add" Style="display: none;" />
             <asp:Button ID="btnGetddlAgentAdd" class="btn btn-lg btn-yellow font-weight-bold btn-block" OnClick="getDropdownAgent" runat="server" Text="Add" Style="display: none;" />
         </ContentTemplate>
@@ -306,6 +307,26 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modalReQR" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold" set-lan="text:Reset QR"></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3 text-center">
+                    <label set-lan="text:Confirm reset QR this item ?"></label>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button class="btn btn-yellow font-weight-bold" onclick="ReQR()" type="button" set-lan="text:OK"></button>
+                    <button type="button" class="btn btn-yellow font-weight-bold" data-dismiss="modal" aria-label="Close" set-lan="text:Close"></button>
+                </div>
+            </div>
+        </div>
+    </div>
     <asp:HiddenField ID="LevelSearch" runat="Server"></asp:HiddenField>
     <asp:HiddenField ID="LevelAdd" runat="Server"></asp:HiddenField>
     <asp:HiddenField ID="LevelEdit" runat="Server"></asp:HiddenField>
@@ -317,6 +338,7 @@
     <asp:HiddenField ID="AgentEdit" runat="Server"></asp:HiddenField>
     <asp:HiddenField ID="StatusEdit" runat="Server"></asp:HiddenField>
     <asp:HiddenField ID="IDDelete" runat="Server"></asp:HiddenField>
+    <asp:HiddenField ID="IDReQR" runat="Server"></asp:HiddenField>
     <asp:HiddenField ID="IDEdit" runat="Server"></asp:HiddenField>
     <asp:HiddenField ID="IDRole" runat="Server"></asp:HiddenField>
     <asp:HiddenField ID="IDAgent" runat="Server"></asp:HiddenField>
@@ -527,10 +549,22 @@
             $('#modalDeleteMember').modal();
         }
 
+        var id_ReQR = "";
+        function viewReQR(idItem) {
+            id_ReQR = idItem;
+            $('#modalReQR').modal();
+        }
+
         function DeleteMember() {
             $("#myModalLoad").modal();
             $("#<%=IDDelete.ClientID%>").val(id_Delete);
             $("#<%=btnDelete.ClientID%>").click();
+        }
+
+        function ReQR() {
+            $("#myModalLoad").modal();
+            $("#<%=IDReQR.ClientID%>").val(id_ReQR);
+            $("#<%=btnReQR.ClientID%>").click();
         }
 
         var id_Edit = "";
@@ -663,7 +697,7 @@ function alertModal(txtAlert) {
     document.getElementById("lbAlert").setAttribute("set-lan", "text:" + txtAlert + "");
     SetLan(localStorage.getItem('Language'));
     $('#modalAlert').modal('show');
-    $("#myModalLoad, #modalAddMember, #modalDeleteMember").modal('hide');
+    $("#myModalLoad, #modalAddMember, #modalDeleteMember, #modalReQR").modal('hide');
 
     if ($("#<%=AgentIDLogin.ClientID%>").val() != "0" && $("#<%=AgentIDLogin.ClientID%>").val() != "1") {
         $(".zoneSearchCom, .zoneSearchAgent, .zoneCompany, .zoneAgent").css("display", "none");
