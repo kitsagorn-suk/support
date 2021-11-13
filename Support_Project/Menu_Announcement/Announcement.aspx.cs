@@ -85,6 +85,7 @@ namespace Support_Project.Menu_Announcement
 
         private void SearchData()
         {
+            try { 
             DataTable table = new DataTable();
             if (AgentSearch.Value == "")
             {
@@ -221,10 +222,16 @@ namespace Support_Project.Menu_Announcement
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "GetData(" + _idTotal.ToString() + ");", true);
             }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
+            }
         }
 
         public void DeleteAnnouncement_click(Object sender, EventArgs e)
         {
+            try { 
             int _idDel = _sql.DeleteAnnouncement(int.Parse(IDDelete.Value), int.Parse(Request.Cookies["Keys"]["ID"]));
             if (_idDel != 0)
             {
@@ -235,10 +242,16 @@ namespace Support_Project.Menu_Announcement
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
             }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
+            }
         }
 
         public void DeleteImageAnnouncement_click(Object sender, EventArgs e)
         {
+            try { 
             int _idDel = _sql.EditImageAnnouncement(int.Parse(IDEditImage.Value), NameDeleteImage.Value);
             if (_idDel != 0)
             {
@@ -249,10 +262,16 @@ namespace Support_Project.Menu_Announcement
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
             }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
+            }
         }
 
         public void EditAnnouncement_click(Object sender, EventArgs e)
         {
+            try { 
             List<string> allFile = new List<string>();
             if (AttahcFile1.PostedFile != null && AttahcFile1.PostedFile.ContentLength > 0)
             {
@@ -334,6 +353,11 @@ namespace Support_Project.Menu_Announcement
             catch
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+            }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
             }
         }
     }

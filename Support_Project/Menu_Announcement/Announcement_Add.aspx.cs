@@ -66,6 +66,7 @@ namespace Support_Project.Menu_Announcement
 
         public void AddAnnouncement_click(Object sender, EventArgs e)
         {
+            try { 
             List<string> allFile = new List<string>();
             if (AttahcFile1.PostedFile != null && AttahcFile1.PostedFile.ContentLength > 0)
             {
@@ -143,6 +144,11 @@ namespace Support_Project.Menu_Announcement
             catch
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+            }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
             }
         }
     }

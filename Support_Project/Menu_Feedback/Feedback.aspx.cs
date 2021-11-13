@@ -84,6 +84,7 @@ namespace Support_Project.Menu_Feedback
 
         private void SearchData()
         {
+            try { 
             DataTable table = new DataTable();
             table = _sql.SearchFeedback(int.Parse(AgentSearch.Value), searchDateStart.Value, searchDateTo.Value);
             if (table != null && table.Rows.Count > 0)
@@ -126,6 +127,11 @@ namespace Support_Project.Menu_Feedback
 
             ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "$('#myModalLoad').modal('hide');", true);
             ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "hideDropdown()", true);
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
+            }
         }
     }
 }

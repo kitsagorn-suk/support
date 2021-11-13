@@ -48,6 +48,7 @@ namespace Support_Project.Menu_Announcement
 
         private void SearchData()
         {
+            try { 
             DataTable table = new DataTable();
 
             int _idTotal = 0;
@@ -109,10 +110,16 @@ namespace Support_Project.Menu_Announcement
             }
 
             ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "setDataLanguage();", true);
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
+            }
         }
 
         public void DeleteLineToken_click(Object sender, EventArgs e)
         {
+            try { 
             int _idDel = _sql.DeleteLineToken(int.Parse(IDDelete.Value), int.Parse(Request.Cookies["Keys"]["ID"]));
             if (_idDel != 0)
             {
@@ -123,10 +130,16 @@ namespace Support_Project.Menu_Announcement
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
             }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
+            }
         }
 
         public void EditLineToken_click(Object sender, EventArgs e)
         {
+            try { 
             int _idChk = _sql.CheckLineToken(NameGroup.Text, int.Parse(IDEdit.Value));
             if (_idChk == 0)
             {
@@ -144,6 +157,11 @@ namespace Support_Project.Menu_Announcement
             else
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModalDuplicate('Name group is duplicate.');", true);
+            }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
             }
         }
     }

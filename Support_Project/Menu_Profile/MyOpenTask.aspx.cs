@@ -47,6 +47,7 @@ namespace Support_Project.Menu_Profile
 
         public void GetAllNoti()
         {
+            try { 
             DateTime datetimenow = DateTime.Now;
             DataTable table = new DataTable();
             StringBuilder sb = new StringBuilder();
@@ -147,10 +148,16 @@ namespace Support_Project.Menu_Profile
             LiteralDataAllNotification.Text = sb.ToString();
 
             ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "$('#myModalLoad').modal('hide');", true);
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
+            }
         }
 
         public void CloseDashboard_click(Object sender, EventArgs e)
         {
+            try { 
             int _id = _sql.CloseMyTask(int.Parse(closeID.Value), int.Parse(Request.Cookies["Keys"]["ID"]));
             if (_id == 0)
             {
@@ -162,10 +169,16 @@ namespace Support_Project.Menu_Profile
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
             }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
+            }
         }
 
         public void CommentDashboard_click(Object sender, EventArgs e)
         {
+            try { 
             int _id = _sql.CommentMyTask(int.Parse(commentID.Value), int.Parse(Request.Cookies["Keys"]["ID"]));
             if (_id == 0)
             {
@@ -176,6 +189,11 @@ namespace Support_Project.Menu_Profile
             else
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+            }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
             }
         }
     }

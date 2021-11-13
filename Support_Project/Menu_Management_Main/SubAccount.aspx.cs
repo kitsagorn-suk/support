@@ -74,6 +74,7 @@ namespace Support_Project.Menu_Management_Main
 
         public void DeleteMember_click(Object sender, EventArgs e)
         {
+            try { 
             int _idDel = _sql.DeleteMember(int.Parse(IDDelete.Value), int.Parse(Request.Cookies["Keys"]["ID"]));
             if (_idDel != 0)
             {
@@ -84,10 +85,16 @@ namespace Support_Project.Menu_Management_Main
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
             }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
+            }
         }
 
         public void EditMember_click(Object sender, EventArgs e)
         {
+            try { 
             int _idChk = _sql.CheckUsername(username.Text, int.Parse(IDEdit.Value));
             if (_idChk == 0)
             {
@@ -106,6 +113,11 @@ namespace Support_Project.Menu_Management_Main
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModalDuplicate('Username is duplicate.');", true);
             }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
+            }
         }
 
         public void Search_click(Object sender, EventArgs e)
@@ -115,6 +127,7 @@ namespace Support_Project.Menu_Management_Main
 
         private void SearchData()
         {
+            try { 
             DataTable table = new DataTable();
 
             LevelSearch.Value = ddllevelSearch.SelectedValue;
@@ -213,6 +226,11 @@ namespace Support_Project.Menu_Management_Main
             }
 
             ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "setDataLanguage();", true);
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
+            }
         }
     }
 }

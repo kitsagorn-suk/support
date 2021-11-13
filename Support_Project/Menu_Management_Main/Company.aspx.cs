@@ -48,6 +48,7 @@ namespace Support_Project.Menu_Management_Main
 
         private void SearchData()
         {
+            try { 
             DataTable table = new DataTable();
 
             if (AgentSearch.Value == "")
@@ -126,21 +127,22 @@ namespace Support_Project.Menu_Management_Main
                 LiteralData.Text = sb.ToString();
             }
 
-            //if (Request.Cookies["Keys"]["Position"] != "Master" && Request.Cookies["Keys"]["Position"] != "Super User")
-            //{
-            //    ScriptManager.RegisterStartupScript(this, this.GetType(), "CallMyFunction", "$('#tbData > thead > tr > th:nth-child(11), #tbData > tbody > tr > td:nth-child(11), #tbData > tfoot > tr > td:nth-child(11)').remove();", true);
-            //}
-
             if (eventPaging.Value != "paging")
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "GetData('" + _idTotal.ToString() + "');", true);
             }
 
             ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "setDataLanguage();", true);
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
+            }
         }
 
         public void DeleteCompany_click(Object sender, EventArgs e)
         {
+            try { 
             int _idDel = _sql.DeleteCompany(int.Parse(IDDelete.Value), int.Parse(Request.Cookies["Keys"]["ID"]));
             if (_idDel != 0)
             {
@@ -151,10 +153,16 @@ namespace Support_Project.Menu_Management_Main
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
             }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
+            }
         }
 
         public void EditCompany_click(Object sender, EventArgs e)
         {
+            try { 
             int _idChk = _sql.CheckCompany(Name.Text, int.Parse(IDEdit.Value));
             if (_idChk == 0)
             {
@@ -172,6 +180,11 @@ namespace Support_Project.Menu_Management_Main
             else
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModalDuplicate('Name is duplicate.');", true);
+            }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
             }
         }
     }

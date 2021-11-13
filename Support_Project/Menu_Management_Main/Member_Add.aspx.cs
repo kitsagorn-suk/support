@@ -126,9 +126,9 @@ namespace Support_Project.Menu_Management_Main
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModalDuplicate('Username is duplicate.');", true);
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
             }
         }
     }

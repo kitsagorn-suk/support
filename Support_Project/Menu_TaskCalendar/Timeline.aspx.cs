@@ -92,6 +92,7 @@ namespace Support_Project.Menu_TaskCalendar
 
         private void SearchData()
         {
+            try { 
             DataTable table = new DataTable();
             table = _sql.SearchLeave(int.Parse(LeaveTypeSearch.Value), LeaveStartDateSearch.Value, LeaveToDateSearch.Value);
             if (table != null && table.Rows.Count > 0)
@@ -222,24 +223,37 @@ namespace Support_Project.Menu_TaskCalendar
             }
 
             ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "setDataLanguage();", true);
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
+            }
         }
 
         public void AddLeave_click(Object sender, EventArgs e)
         {
-            int _id = _sql.AddLeave(LeaveStartDateAdd.Value, LeaveToDateAdd.Value, int.Parse(LeaveTypeAdd.Value), Description.Text, int.Parse(Request.Cookies["Keys"]["ID"]));
-            if (_id != 0)
+            try
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Add new leave success.');", true);
-                SearchData();
+                int _id = _sql.AddLeave(LeaveStartDateAdd.Value, LeaveToDateAdd.Value, int.Parse(LeaveTypeAdd.Value), Description.Text, int.Parse(Request.Cookies["Keys"]["ID"]));
+                if (_id != 0)
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Add new leave success.');", true);
+                    SearchData();
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
             }
         }
 
         public void ApproveLeave_click(Object sender, EventArgs e)
         {
+            try { 
             int _id = _sql.ApproveLeave(int.Parse(ApproveID.Value), int.Parse(Request.Cookies["Keys"]["ID"]));
             if (_id != 0)
             {
@@ -250,10 +264,16 @@ namespace Support_Project.Menu_TaskCalendar
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
             }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
+            }
         }
 
         public void RejectLeave_click(Object sender, EventArgs e)
         {
+            try { 
             int _id = _sql.RejectLeave(int.Parse(RejectID.Value), int.Parse(Request.Cookies["Keys"]["ID"]));
             if (_id != 0)
             {
@@ -263,6 +283,11 @@ namespace Support_Project.Menu_TaskCalendar
             else
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+            }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
             }
         }
     }

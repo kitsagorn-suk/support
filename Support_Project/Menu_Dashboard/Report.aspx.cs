@@ -72,268 +72,137 @@ namespace Support_Project.Menu_Dasboard
 
         public void SearchData(Object sender)
         {
-            DateTime datetimenow = DateTime.Now;
-            DataTable table = new DataTable();
-            if (MyTask.Value == "Yes")
+            try
             {
-                MyTask.Value = Request.Cookies["Keys"]["ID"];
-            }
-
-            int _idTotal = 0;
-            _idTotal = _sql.SearchDashboardPaging(searchProduct.Text, int.Parse(MyTask.Value), searchDateStart.Value, searchDateTo.Value, int.Parse(CategorySearch.Value), StatusSearch.Value, int.Parse(Request.Cookies["Keys"]["Agent_ID"]), Request.Cookies["Keys"]["Agent_Master"]);
-            totalDocs.Value = _idTotal.ToString();
-
-            if (thisPage.Value == "" || thisPage.Value == null)
-            {
-                PageNow = "1";
-            }
-            else
-            {
-                PageNow = thisPage.Value;
-            }
-
-            string perPage = WebConfigurationManager.AppSettings["perPage"];
-            table = _sql.SearchDashboard(searchProduct.Text, int.Parse(MyTask.Value), searchDateStart.Value, searchDateTo.Value, int.Parse(CategorySearch.Value), StatusSearch.Value, int.Parse(Request.Cookies["Keys"]["Agent_ID"]), int.Parse(PageNow), int.Parse(perPage), Request.Cookies["Keys"]["Agent_Master"]);
-            if (table != null && table.Rows.Count > 0)
-            {
-                var i = 1;
-                StringBuilder sb = new StringBuilder();
-                foreach (DataRow row in table.Rows)
+                DateTime datetimenow = DateTime.Now;
+                DataTable table = new DataTable();
+                if (MyTask.Value == "Yes")
                 {
-                    if (row["status"].ToString() != "done" && row["status"].ToString() != "cancel")
+                    MyTask.Value = Request.Cookies["Keys"]["ID"];
+                }
+
+                int _idTotal = 0;
+                _idTotal = _sql.SearchDashboardPaging(searchProduct.Text, int.Parse(MyTask.Value), searchDateStart.Value, searchDateTo.Value, int.Parse(CategorySearch.Value), StatusSearch.Value, int.Parse(Request.Cookies["Keys"]["Agent_ID"]), Request.Cookies["Keys"]["Agent_Master"]);
+                totalDocs.Value = _idTotal.ToString();
+
+                if (thisPage.Value == "" || thisPage.Value == null)
+                {
+                    PageNow = "1";
+                }
+                else
+                {
+                    PageNow = thisPage.Value;
+                }
+
+                string perPage = WebConfigurationManager.AppSettings["perPage"];
+                table = _sql.SearchDashboard(searchProduct.Text, int.Parse(MyTask.Value), searchDateStart.Value, searchDateTo.Value, int.Parse(CategorySearch.Value), StatusSearch.Value, int.Parse(Request.Cookies["Keys"]["Agent_ID"]), int.Parse(PageNow), int.Parse(perPage), Request.Cookies["Keys"]["Agent_Master"]);
+                if (table != null && table.Rows.Count > 0)
+                {
+                    var i = 1;
+                    StringBuilder sb = new StringBuilder();
+                    foreach (DataRow row in table.Rows)
                     {
-                        DateTime creatDate = DateTime.Parse(row["create_date"].ToString());
-                        var countMinute = (int)datetimenow.Subtract(creatDate).TotalMinutes;
+                        if (row["status"].ToString() != "done" && row["status"].ToString() != "cancel")
+                        {
+                            DateTime creatDate = DateTime.Parse(row["create_date"].ToString());
+                            var countMinute = (int)datetimenow.Subtract(creatDate).TotalMinutes;
 
-                        if (row["status"].ToString() == "waiting")
-                        {
-                            sb.Append("<tr class='trYellow'>");
-                        }
-                        else if (row["status"].ToString() == "new" || row["status"].ToString() == "open")
-                        {
-                            sb.Append("<tr class='trRed'>");
-                        }
-                        else
-                        {
-                            sb.Append("<tr>");
-                        }
+                            if (row["status"].ToString() == "waiting")
+                            {
+                                sb.Append("<tr class='trYellow'>");
+                            }
+                            else if (row["status"].ToString() == "new" || row["status"].ToString() == "open")
+                            {
+                                sb.Append("<tr class='trRed'>");
+                            }
+                            else
+                            {
+                                sb.Append("<tr>");
+                            }
 
-                        sb.Append("<td style='text-align: center;'>" + (((int.Parse(PageNow) - 1) * int.Parse(perPage)) + i) + "</td>");
+                            sb.Append("<td style='text-align: center;'>" + (((int.Parse(PageNow) - 1) * int.Parse(perPage)) + i) + "</td>");
 
-                        if (row["level"].ToString() == "1")
-                        {
-                            sb.Append("<td style='text-align: center;'><i class='fa fa-circle' style='color: red;' title='Urgent'></i></td>");
-                        }
-                        else if (row["level"].ToString() == "2")
-                        {
-                            sb.Append("<td style='text-align: center;'><i class='fa fa-circle' style='color: #ff9325;' title='High'></i></td>");
-                        }
-                        else if (row["level"].ToString() == "3")
-                        {
-                            sb.Append("<td style='text-align: center;'><i class='fa fa-circle' style='color: #ffc107;' title='Medium'></i></td>");
-                        }
-                        else if (row["level"].ToString() == "4")
-                        {
-                            sb.Append("<td style='text-align: center;'><i class='fa fa-circle' style='color: #00c851;' title='Low'></i></td>");
-                        }
+                            if (row["level"].ToString() == "1")
+                            {
+                                sb.Append("<td style='text-align: center;'><i class='fa fa-circle' style='color: red;' title='Urgent'></i></td>");
+                            }
+                            else if (row["level"].ToString() == "2")
+                            {
+                                sb.Append("<td style='text-align: center;'><i class='fa fa-circle' style='color: #ff9325;' title='High'></i></td>");
+                            }
+                            else if (row["level"].ToString() == "3")
+                            {
+                                sb.Append("<td style='text-align: center;'><i class='fa fa-circle' style='color: #ffc107;' title='Medium'></i></td>");
+                            }
+                            else if (row["level"].ToString() == "4")
+                            {
+                                sb.Append("<td style='text-align: center;'><i class='fa fa-circle' style='color: #00c851;' title='Low'></i></td>");
+                            }
 
-                        sb.Append("<td style='text-align: center;'>" + row["ticket_id"].ToString() + "</td>");
-                        sb.Append("<td style='text-align: center;'>" + row["status"].ToString() + "</td>");
-                        sb.Append("<td><p class='overflowTableS ellipsis' title='" + row["product"].ToString() + "'>" + row["product"].ToString() + "</p></td>");
-                        sb.Append("<td><p class='overflowTableS ellipsis' title='" + row["desc_username"].ToString() + "'>" + row["desc_username"].ToString() + "</p></td>");
-                        sb.Append("<td><p class='overflowTableS ellipsis' title='" + row["agent"].ToString() + "'>" + row["agent"].ToString() + "</p></td>");
-                        sb.Append("<td style='text-align: center;'>" + row["categories_name"].ToString() + "</td>");
+                            sb.Append("<td style='text-align: center;'>" + row["ticket_id"].ToString() + "</td>");
+                            sb.Append("<td style='text-align: center;'>" + row["status"].ToString() + "</td>");
+                            sb.Append("<td><p class='overflowTableS ellipsis' title='" + row["product"].ToString() + "'>" + row["product"].ToString() + "</p></td>");
+                            sb.Append("<td><p class='overflowTableS ellipsis' title='" + row["desc_username"].ToString() + "'>" + row["desc_username"].ToString() + "</p></td>");
+                            sb.Append("<td><p class='overflowTableS ellipsis' title='" + row["agent"].ToString() + "'>" + row["agent"].ToString() + "</p></td>");
+                            sb.Append("<td style='text-align: center;'>" + row["categories_name"].ToString() + "</td>");
 
-                        var dateaverage_create = "";
-                        if (row["create_date"].ToString() != "" && row["create_date"].ToString() != null)
-                        {
-                            DateTime oDateLog = Convert.ToDateTime(row["create_date"].ToString());
-                            string xLog = oDateLog.ToString("dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
-                            dateaverage_create = xLog;
-                        }
-                        else
-                        {
-                            dateaverage_create = "-";
-                        }
-                        sb.Append("<td style='text-align: center;'>" + dateaverage_create + "</td>");
-                        sb.Append("<td><p class='soverflowTable ellipsis' title='" + row["create_by_name"].ToString() + "'>" + row["create_by_name"].ToString() + "</p></td>");
+                            var dateaverage_create = "";
+                            if (row["create_date"].ToString() != "" && row["create_date"].ToString() != null)
+                            {
+                                DateTime oDateLog = Convert.ToDateTime(row["create_date"].ToString());
+                                string xLog = oDateLog.ToString("dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
+                                dateaverage_create = xLog;
+                            }
+                            else
+                            {
+                                dateaverage_create = "-";
+                            }
+                            sb.Append("<td style='text-align: center;'>" + dateaverage_create + "</td>");
+                            sb.Append("<td><p class='soverflowTable ellipsis' title='" + row["create_by_name"].ToString() + "'>" + row["create_by_name"].ToString() + "</p></td>");
 
-                        if (row["pickup_by_name"].ToString() != "" && row["pickup_by_name"].ToString() != null)
-                        {
-                            sb.Append("<td><p class='soverflowTable ellipsis' title='" + row["pickup_by_name"].ToString() + "'>" + row["pickup_by_name"].ToString() + "</p></td>");
-                        }
-                        else
-                        {
-                            sb.Append("<td>-</td>");
-                        }
+                            if (row["pickup_by_name"].ToString() != "" && row["pickup_by_name"].ToString() != null)
+                            {
+                                sb.Append("<td><p class='soverflowTable ellipsis' title='" + row["pickup_by_name"].ToString() + "'>" + row["pickup_by_name"].ToString() + "</p></td>");
+                            }
+                            else
+                            {
+                                sb.Append("<td>-</td>");
+                            }
 
-                        //var dateaverage = "";
-                        //if (row["average_end_date"].ToString() != "" && row["average_end_date"].ToString() != null)
-                        //{
-                        //    DateTime oDateLog = Convert.ToDateTime(row["average_end_date"].ToString());
-                        //    string xLog = oDateLog.ToString("dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
-                        //    dateaverage = xLog;
-                        //}
-                        //else
-                        //{
-                        //    dateaverage = "-";
-                        //}
-                        //sb.Append("<td style='text-align: center;'>" + dateaverage + "</td>");
-                        var txtDescWeb = row["desc_website_link"].ToString();
-                        var txtDescUser = row["desc_username"].ToString();
-                        var txtDescPass = row["desc_password"].ToString();
-                        var txtDescProblem = row["desc_problem"].ToString().Replace("\r\n", "<br/>");
-                        txtDescProblem = txtDescProblem.Replace("'", "").Replace("\"", "");
-                        var txtDescTroubleshooting = row["desc_troubleshooting"].ToString().Replace("\r\n", "<br/>");
-                        txtDescTroubleshooting = txtDescTroubleshooting.Replace("'", "").Replace("\"", "");
-                        var txtDescAfter_fixed = row["desc_after_fixed"].ToString().Replace("\r\n", "<br/>");
-                        txtDescAfter_fixed = txtDescAfter_fixed.Replace("'", "").Replace("\"", "");
-                        var txtDescOther = row["desc_other"].ToString().Replace("\r\n", "<br/>");
-                        txtDescOther = txtDescOther.Replace("'", "").Replace("\"", "");
+                            var txtDescWeb = row["desc_website_link"].ToString();
+                            var txtDescUser = row["desc_username"].ToString();
+                            var txtDescPass = row["desc_password"].ToString();
+                            var txtDescProblem = row["desc_problem"].ToString().Replace("\r\n", "<br/>");
+                            txtDescProblem = txtDescProblem.Replace("'", "").Replace("\"", "");
+                            var txtDescTroubleshooting = row["desc_troubleshooting"].ToString().Replace("\r\n", "<br/>");
+                            txtDescTroubleshooting = txtDescTroubleshooting.Replace("'", "").Replace("\"", "");
+                            var txtDescAfter_fixed = row["desc_after_fixed"].ToString().Replace("\r\n", "<br/>");
+                            txtDescAfter_fixed = txtDescAfter_fixed.Replace("'", "").Replace("\"", "");
+                            var txtDescOther = row["desc_other"].ToString().Replace("\r\n", "<br/>");
+                            txtDescOther = txtDescOther.Replace("'", "").Replace("\"", "");
 
-                        if (row["pickup_by_name"].ToString() != "" && row["pickup_by_name"].ToString() != null)
-                        {
-                            sb.Append("<td style='text-align: center;'><a onclick='getDesc(\"" + row["ticket_id"].ToString() + "\",\"" + txtDescWeb + "\",\"" + txtDescUser + "\",\"" + txtDescPass + "\",\"" + txtDescProblem + "\",\"" + txtDescTroubleshooting + "\",\"" + txtDescAfter_fixed + "\",\"" + txtDescOther + "\");' style='font-size: 1rem;' class='link'><i class='fas fa-eye'></i></a></td>");
-                        }
-                        else if (row["create_by"].ToString() == Request.Cookies["Keys"]["ID"])
-                        {
-                            sb.Append("<td style='text-align: center;'><a onclick='getDesc(\"" + row["ticket_id"].ToString() + "\",\"" + txtDescWeb + "\",\"" + txtDescUser + "\",\"" + txtDescPass + "\",\"" + txtDescProblem + "\",\"" + txtDescTroubleshooting + "\",\"" + txtDescAfter_fixed + "\",\"" + txtDescOther + "\");' style='font-size: 1rem;' class='link'><i class='fas fa-eye'></i></a></td>");
-                        }
-                        else
-                        {
-                            sb.Append("<td style='text-align: center;'><a style='font-size: 1rem;' class='link disabled-link'><i class='fas fa-eye'></i></a></td>");
-                        }
+                            if (row["pickup_by_name"].ToString() != "" && row["pickup_by_name"].ToString() != null)
+                            {
+                                sb.Append("<td style='text-align: center;'><a onclick='getDesc(\"" + row["ticket_id"].ToString() + "\",\"" + txtDescWeb + "\",\"" + txtDescUser + "\",\"" + txtDescPass + "\",\"" + txtDescProblem + "\",\"" + txtDescTroubleshooting + "\",\"" + txtDescAfter_fixed + "\",\"" + txtDescOther + "\");' style='font-size: 1rem;' class='link'><i class='fas fa-eye'></i></a></td>");
+                            }
+                            else if (row["create_by"].ToString() == Request.Cookies["Keys"]["ID"])
+                            {
+                                sb.Append("<td style='text-align: center;'><a onclick='getDesc(\"" + row["ticket_id"].ToString() + "\",\"" + txtDescWeb + "\",\"" + txtDescUser + "\",\"" + txtDescPass + "\",\"" + txtDescProblem + "\",\"" + txtDescTroubleshooting + "\",\"" + txtDescAfter_fixed + "\",\"" + txtDescOther + "\");' style='font-size: 1rem;' class='link'><i class='fas fa-eye'></i></a></td>");
+                            }
+                            else
+                            {
+                                sb.Append("<td style='text-align: center;'><a style='font-size: 1rem;' class='link disabled-link'><i class='fas fa-eye'></i></a></td>");
+                            }
 
-                        if (row["attached_file"].ToString() != "")
-                        {
-                            sb.Append("<td style='text-align: center;'><a onclick='getImage(\"" + row["attached_file"].ToString() + "\");' style='font-size: 1rem;' class='link'><i class='fas fa-file-alt'></i></a></td>");
-                        }
-                        else
-                        {
-                            sb.Append("<td style='text-align: center;'><a onclick='getImage(\"" + row["attached_file"].ToString() + "\");' style='font-size: 1rem;' class='link disabled-link'><i class='fas fa-file-alt'></i></a></td>");
-                        }
+                            if (row["attached_file"].ToString() != "")
+                            {
+                                sb.Append("<td style='text-align: center;'><a onclick='getImage(\"" + row["attached_file"].ToString() + "\");' style='font-size: 1rem;' class='link'><i class='fas fa-file-alt'></i></a></td>");
+                            }
+                            else
+                            {
+                                sb.Append("<td style='text-align: center;'><a onclick='getImage(\"" + row["attached_file"].ToString() + "\");' style='font-size: 1rem;' class='link disabled-link'><i class='fas fa-file-alt'></i></a></td>");
+                            }
 
-                        sb.Append("<td style='text-align: center;'><a onclick='getPickup(\"" + row["id"].ToString() + "\");' style='font-size: 1rem;' class='link'><i class='fas fa-plus-square'></i></a></td>");
-                        sb.Append("<td style='text-align: center;'>");
-
-                        if (row["count_chat"].ToString() == "0" || row["count_chat"].ToString() == null)
-                        {
-                            sb.Append("<a onclick='getChat(\"" + row["id"].ToString() + "\");' style='font-size: 1rem;' class='link'><i class='fa fa-comment'></i></a>&emsp;");
-                        }
-                        else
-                        {
-                            sb.Append("<a onclick='getChat(\"" + row["id"].ToString() + "\");' style='font-size: 1rem;' class='link'><i class='fa fa-comment'></i><span class='dot'></span></a>&emsp;");
-                        }
-
-                        if (Request.Cookies["Keys"]["Agent_ID"] == "0" || Request.Cookies["Keys"]["Agent_ID"] == "1")
-                        {
-                            sb.Append("<a onclick='getCancel(\"" + row["id"].ToString() + "\");' style='font-size: 1rem;' class='link'><i class='fa fa-times-circle' style='color: red;'></i></a>&emsp;");
-                            sb.Append("<a onclick='getClose(\"" + row["id"].ToString() + "\");' style='font-size: 1rem;' class='link'><i class='fa fa-check-circle' style='color: green;'></i></a>");
-                        }
-
-                        sb.Append("</td></tr>");
-                    }
-                    else
-                    {
-                        sb.Append("<tr>");
-
-                        sb.Append("<td style='text-align: center;'>" + (((int.Parse(PageNow) - 1) * int.Parse(perPage)) + i) + "</td>");
-
-                        if (row["level"].ToString() == "1")
-                        {
-                            sb.Append("<td style='text-align: center;'><i class='fa fa-circle' style='color: red;' title='Urgent'></i></td>");
-                        }
-                        else if (row["level"].ToString() == "2")
-                        {
-                            sb.Append("<td style='text-align: center;'><i class='fa fa-circle' style='color: #ff9325;' title='High'></i></td>");
-                        }
-                        else if (row["level"].ToString() == "3")
-                        {
-                            sb.Append("<td style='text-align: center;'><i class='fa fa-circle' style='color: #ffc107;' title='Medium'></i></td>");
-                        }
-                        else if (row["level"].ToString() == "4")
-                        {
-                            sb.Append("<td style='text-align: center;'><i class='fa fa-circle' style='color: #00c851;' title='Low'></i></td>");
-                        }
-
-                        sb.Append("<td style='text-align: center;'>" + row["ticket_id"].ToString() + "</td>");
-                        sb.Append("<td style='text-align: center;'>" + row["status"].ToString() + "</td>");
-                        sb.Append("<td><p class='overflowTableS ellipsis' title='" + row["product"].ToString() + "'>" + row["product"].ToString() + "</p></td>");
-                        sb.Append("<td><p class='overflowTableS ellipsis' title='" + row["desc_username"].ToString() + "'>" + row["desc_username"].ToString() + "</p></td>");
-                        sb.Append("<td><p class='overflowTableS ellipsis' title='" + row["agent"].ToString() + "'>" + row["agent"].ToString() + "</p></td>");
-                        sb.Append("<td style='text-align: center;'>" + row["categories_name"].ToString() + "</td>");
-
-                        var dateaverage_create = "";
-                        if (row["create_date"].ToString() != "" && row["create_date"].ToString() != null)
-                        {
-                            DateTime oDateLog = Convert.ToDateTime(row["create_date"].ToString());
-                            string xLog = oDateLog.ToString("dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
-                            dateaverage_create = xLog;
-                        }
-                        else
-                        {
-                            dateaverage_create = "-";
-                        }
-                        sb.Append("<td style='text-align: center;'>" + dateaverage_create + "</td>");
-                        sb.Append("<td><p class='soverflowTable ellipsis' title='" + row["create_by_name"].ToString() + "'>" + row["create_by_name"].ToString() + "</p></td>");
-
-                        if (row["pickup_by_name"].ToString() != "" && row["pickup_by_name"].ToString() != null)
-                        {
-                            sb.Append("<td><p class='soverflowTable ellipsis' title='" + row["pickup_by_name"].ToString() + "'>" + row["pickup_by_name"].ToString() + "</p></td>");
-                        }
-                        else
-                        {
-                            sb.Append("<td>-</td>");
-                        }
-
-                        //var dateaverage = "";
-                        //if (row["average_end_date"].ToString() != "" && row["average_end_date"].ToString() != null)
-                        //{
-                        //    DateTime oDateLog = Convert.ToDateTime(row["average_end_date"].ToString());
-                        //    string xLog = oDateLog.ToString("dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
-                        //    dateaverage = xLog;
-                        //}
-                        //else
-                        //{
-                        //    dateaverage = "-";
-                        //}
-                        //sb.Append("<td style='text-align: center;'>" + dateaverage + "</td>");
-                        var txtDescWeb = row["desc_website_link"].ToString();
-                        var txtDescUser = row["desc_username"].ToString();
-                        var txtDescPass = row["desc_password"].ToString();
-                        var txtDescProblem = row["desc_problem"].ToString().Replace("\r\n", "<br/>");
-                        txtDescProblem = txtDescProblem.Replace("'", "").Replace("\"", "");
-                        var txtDescTroubleshooting = row["desc_troubleshooting"].ToString().Replace("\r\n", "<br/>");
-                        txtDescTroubleshooting = txtDescTroubleshooting.Replace("'", "").Replace("\"", "");
-                        var txtDescAfter_fixed = row["desc_after_fixed"].ToString().Replace("\r\n", "<br/>");
-                        txtDescAfter_fixed = txtDescAfter_fixed.Replace("'", "").Replace("\"", "");
-                        var txtDescOther = row["desc_other"].ToString().Replace("\r\n", "<br/>");
-                        txtDescOther = txtDescOther.Replace("'", "").Replace("\"", "");
-
-                        if (row["pickup_by_name"].ToString() != "" && row["pickup_by_name"].ToString() != null)
-                        {
-                            sb.Append("<td style='text-align: center;'><a onclick='getDesc(\"" + row["ticket_id"].ToString() + "\",\"" + txtDescWeb + "\",\"" + txtDescUser + "\",\"" + txtDescPass + "\",\"" + txtDescProblem + "\",\"" + txtDescTroubleshooting + "\",\"" + txtDescAfter_fixed + "\",\"" + txtDescOther + "\");' style='font-size: 1rem;' class='link'><i class='fas fa-eye'></i></a></td>");
-                        }
-                        else if (row["create_by"].ToString() == Request.Cookies["Keys"]["ID"])
-                        {
-                            sb.Append("<td style='text-align: center;'><a onclick='getDesc(\"" + row["ticket_id"].ToString() + "\",\"" + txtDescWeb + "\",\"" + txtDescUser + "\",\"" + txtDescPass + "\",\"" + txtDescProblem + "\",\"" + txtDescTroubleshooting + "\",\"" + txtDescAfter_fixed + "\",\"" + txtDescOther + "\");' style='font-size: 1rem;' class='link'><i class='fas fa-eye'></i></a></td>");
-                        }
-                        else
-                        {
-                            sb.Append("<td style='text-align: center;'><a style='font-size: 1rem;' class='link disabled-link'><i class='fas fa-eye'></i></a></td>");
-                        }
-
-                        if (row["attached_file"].ToString() != "")
-                        {
-                            sb.Append("<td style='text-align: center;'><a onclick='getImage(\"" + row["attached_file"].ToString() + "\");' style='font-size: 1rem;' class='link'><i class='fas fa-file-alt'></i></a></td>");
-                        }
-                        else
-                        {
-                            sb.Append("<td style='text-align: center;'><a onclick='getImage(\"" + row["attached_file"].ToString() + "\");' style='font-size: 1rem;' class='link disabled-link'><i class='fas fa-file-alt'></i></a></td>");
-                        }
-
-                        if (row["status"].ToString() == "new" || row["status"].ToString() == "open" || row["status"].ToString() == "waiting")
-                        {
                             sb.Append("<td style='text-align: center;'><a onclick='getPickup(\"" + row["id"].ToString() + "\");' style='font-size: 1rem;' class='link'><i class='fas fa-plus-square'></i></a></td>");
                             sb.Append("<td style='text-align: center;'>");
 
@@ -352,56 +221,169 @@ namespace Support_Project.Menu_Dasboard
                                 sb.Append("<a onclick='getClose(\"" + row["id"].ToString() + "\");' style='font-size: 1rem;' class='link'><i class='fa fa-check-circle' style='color: green;'></i></a>");
                             }
 
-                            sb.Append("</td>");
+                            sb.Append("</td></tr>");
                         }
                         else
                         {
-                            sb.Append("<td style='text-align: center;'><a style='font-size: 1rem;' class='link disabled-link'><i class='fas fa-plus-square'></i></a></td>");
-                            sb.Append("<td style='text-align: center;'>");
+                            sb.Append("<tr>");
 
-                            if (row["count_chat"].ToString() == "0" || row["count_chat"].ToString() == null)
+                            sb.Append("<td style='text-align: center;'>" + (((int.Parse(PageNow) - 1) * int.Parse(perPage)) + i) + "</td>");
+
+                            if (row["level"].ToString() == "1")
                             {
-                                sb.Append("<a onclick='getChat(\"" + row["id"].ToString() + "\");' style='font-size: 1rem;' class='link'><i class='fa fa-comment'></i></a>&emsp;");
+                                sb.Append("<td style='text-align: center;'><i class='fa fa-circle' style='color: red;' title='Urgent'></i></td>");
+                            }
+                            else if (row["level"].ToString() == "2")
+                            {
+                                sb.Append("<td style='text-align: center;'><i class='fa fa-circle' style='color: #ff9325;' title='High'></i></td>");
+                            }
+                            else if (row["level"].ToString() == "3")
+                            {
+                                sb.Append("<td style='text-align: center;'><i class='fa fa-circle' style='color: #ffc107;' title='Medium'></i></td>");
+                            }
+                            else if (row["level"].ToString() == "4")
+                            {
+                                sb.Append("<td style='text-align: center;'><i class='fa fa-circle' style='color: #00c851;' title='Low'></i></td>");
+                            }
+
+                            sb.Append("<td style='text-align: center;'>" + row["ticket_id"].ToString() + "</td>");
+                            sb.Append("<td style='text-align: center;'>" + row["status"].ToString() + "</td>");
+                            sb.Append("<td><p class='overflowTableS ellipsis' title='" + row["product"].ToString() + "'>" + row["product"].ToString() + "</p></td>");
+                            sb.Append("<td><p class='overflowTableS ellipsis' title='" + row["desc_username"].ToString() + "'>" + row["desc_username"].ToString() + "</p></td>");
+                            sb.Append("<td><p class='overflowTableS ellipsis' title='" + row["agent"].ToString() + "'>" + row["agent"].ToString() + "</p></td>");
+                            sb.Append("<td style='text-align: center;'>" + row["categories_name"].ToString() + "</td>");
+
+                            var dateaverage_create = "";
+                            if (row["create_date"].ToString() != "" && row["create_date"].ToString() != null)
+                            {
+                                DateTime oDateLog = Convert.ToDateTime(row["create_date"].ToString());
+                                string xLog = oDateLog.ToString("dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
+                                dateaverage_create = xLog;
                             }
                             else
                             {
-                                sb.Append("<a onclick='getChat(\"" + row["id"].ToString() + "\");' style='font-size: 1rem;' class='link'><i class='fa fa-comment'></i><span class='dot'></span></a>&emsp;");
+                                dateaverage_create = "-";
                             }
+                            sb.Append("<td style='text-align: center;'>" + dateaverage_create + "</td>");
+                            sb.Append("<td><p class='soverflowTable ellipsis' title='" + row["create_by_name"].ToString() + "'>" + row["create_by_name"].ToString() + "</p></td>");
 
-                            if (Request.Cookies["Keys"]["Agent_ID"] == "0" || Request.Cookies["Keys"]["Agent_ID"] == "1")
+                            if (row["pickup_by_name"].ToString() != "" && row["pickup_by_name"].ToString() != null)
                             {
-                                sb.Append("<a style='font-size: 1rem;' class='link disabled-link'><i class='fa fa-times-circle'></i></a>&emsp;");
-                                sb.Append("<a style='font-size: 1rem;' class='link disabled-link'><i class='fa fa-check-circle'></i></a>");
+                                sb.Append("<td><p class='soverflowTable ellipsis' title='" + row["pickup_by_name"].ToString() + "'>" + row["pickup_by_name"].ToString() + "</p></td>");
+                            }
+                            else
+                            {
+                                sb.Append("<td>-</td>");
                             }
 
-                            sb.Append("</td>");
-                        }
+                            var txtDescWeb = row["desc_website_link"].ToString();
+                            var txtDescUser = row["desc_username"].ToString();
+                            var txtDescPass = row["desc_password"].ToString();
+                            var txtDescProblem = row["desc_problem"].ToString().Replace("\r\n", "<br/>");
+                            txtDescProblem = txtDescProblem.Replace("'", "").Replace("\"", "");
+                            var txtDescTroubleshooting = row["desc_troubleshooting"].ToString().Replace("\r\n", "<br/>");
+                            txtDescTroubleshooting = txtDescTroubleshooting.Replace("'", "").Replace("\"", "");
+                            var txtDescAfter_fixed = row["desc_after_fixed"].ToString().Replace("\r\n", "<br/>");
+                            txtDescAfter_fixed = txtDescAfter_fixed.Replace("'", "").Replace("\"", "");
+                            var txtDescOther = row["desc_other"].ToString().Replace("\r\n", "<br/>");
+                            txtDescOther = txtDescOther.Replace("'", "").Replace("\"", "");
 
-                        sb.Append("</tr>");
+                            if (row["pickup_by_name"].ToString() != "" && row["pickup_by_name"].ToString() != null)
+                            {
+                                sb.Append("<td style='text-align: center;'><a onclick='getDesc(\"" + row["ticket_id"].ToString() + "\",\"" + txtDescWeb + "\",\"" + txtDescUser + "\",\"" + txtDescPass + "\",\"" + txtDescProblem + "\",\"" + txtDescTroubleshooting + "\",\"" + txtDescAfter_fixed + "\",\"" + txtDescOther + "\");' style='font-size: 1rem;' class='link'><i class='fas fa-eye'></i></a></td>");
+                            }
+                            else if (row["create_by"].ToString() == Request.Cookies["Keys"]["ID"])
+                            {
+                                sb.Append("<td style='text-align: center;'><a onclick='getDesc(\"" + row["ticket_id"].ToString() + "\",\"" + txtDescWeb + "\",\"" + txtDescUser + "\",\"" + txtDescPass + "\",\"" + txtDescProblem + "\",\"" + txtDescTroubleshooting + "\",\"" + txtDescAfter_fixed + "\",\"" + txtDescOther + "\");' style='font-size: 1rem;' class='link'><i class='fas fa-eye'></i></a></td>");
+                            }
+                            else
+                            {
+                                sb.Append("<td style='text-align: center;'><a style='font-size: 1rem;' class='link disabled-link'><i class='fas fa-eye'></i></a></td>");
+                            }
+
+                            if (row["attached_file"].ToString() != "")
+                            {
+                                sb.Append("<td style='text-align: center;'><a onclick='getImage(\"" + row["attached_file"].ToString() + "\");' style='font-size: 1rem;' class='link'><i class='fas fa-file-alt'></i></a></td>");
+                            }
+                            else
+                            {
+                                sb.Append("<td style='text-align: center;'><a onclick='getImage(\"" + row["attached_file"].ToString() + "\");' style='font-size: 1rem;' class='link disabled-link'><i class='fas fa-file-alt'></i></a></td>");
+                            }
+
+                            if (row["status"].ToString() == "new" || row["status"].ToString() == "open" || row["status"].ToString() == "waiting")
+                            {
+                                sb.Append("<td style='text-align: center;'><a onclick='getPickup(\"" + row["id"].ToString() + "\");' style='font-size: 1rem;' class='link'><i class='fas fa-plus-square'></i></a></td>");
+                                sb.Append("<td style='text-align: center;'>");
+
+                                if (row["count_chat"].ToString() == "0" || row["count_chat"].ToString() == null)
+                                {
+                                    sb.Append("<a onclick='getChat(\"" + row["id"].ToString() + "\");' style='font-size: 1rem;' class='link'><i class='fa fa-comment'></i></a>&emsp;");
+                                }
+                                else
+                                {
+                                    sb.Append("<a onclick='getChat(\"" + row["id"].ToString() + "\");' style='font-size: 1rem;' class='link'><i class='fa fa-comment'></i><span class='dot'></span></a>&emsp;");
+                                }
+
+                                if (Request.Cookies["Keys"]["Agent_ID"] == "0" || Request.Cookies["Keys"]["Agent_ID"] == "1")
+                                {
+                                    sb.Append("<a onclick='getCancel(\"" + row["id"].ToString() + "\");' style='font-size: 1rem;' class='link'><i class='fa fa-times-circle' style='color: red;'></i></a>&emsp;");
+                                    sb.Append("<a onclick='getClose(\"" + row["id"].ToString() + "\");' style='font-size: 1rem;' class='link'><i class='fa fa-check-circle' style='color: green;'></i></a>");
+                                }
+
+                                sb.Append("</td>");
+                            }
+                            else
+                            {
+                                sb.Append("<td style='text-align: center;'><a style='font-size: 1rem;' class='link disabled-link'><i class='fas fa-plus-square'></i></a></td>");
+                                sb.Append("<td style='text-align: center;'>");
+
+                                if (row["count_chat"].ToString() == "0" || row["count_chat"].ToString() == null)
+                                {
+                                    sb.Append("<a onclick='getChat(\"" + row["id"].ToString() + "\");' style='font-size: 1rem;' class='link'><i class='fa fa-comment'></i></a>&emsp;");
+                                }
+                                else
+                                {
+                                    sb.Append("<a onclick='getChat(\"" + row["id"].ToString() + "\");' style='font-size: 1rem;' class='link'><i class='fa fa-comment'></i><span class='dot'></span></a>&emsp;");
+                                }
+
+                                if (Request.Cookies["Keys"]["Agent_ID"] == "0" || Request.Cookies["Keys"]["Agent_ID"] == "1")
+                                {
+                                    sb.Append("<a style='font-size: 1rem;' class='link disabled-link'><i class='fa fa-times-circle'></i></a>&emsp;");
+                                    sb.Append("<a style='font-size: 1rem;' class='link disabled-link'><i class='fa fa-check-circle'></i></a>");
+                                }
+
+                                sb.Append("</td>");
+                            }
+
+                            sb.Append("</tr>");
+                        }
+                        i++;
                     }
-                    i++;
+
+                    LiteralData.Text = sb.ToString();
+                }
+                else
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("<tr><td colspan='15' style='text-align: center;' set-lan='text:No Data.'></td></tr>");
+                    LiteralData.Text = sb.ToString();
                 }
 
-                LiteralData.Text = sb.ToString();
-            }
-            else
-            {
-                StringBuilder sb = new StringBuilder();
-                sb.Append("<tr><td colspan='15' style='text-align: center;' set-lan='text:No Data.'></td></tr>");
-                LiteralData.Text = sb.ToString();
-            }
+                if (Request.Cookies["Keys"]["Agent_ID"] != "0" && Request.Cookies["Keys"]["Agent_ID"] != "1")
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "$('#tbData > thead > tr > th:nth-child(14) , #tbData > tbody > tr > td:nth-child(14), #tbData > tfoot > tr > td:nth-child(14)').css('display', 'none');", true);
+                }
 
-            if (Request.Cookies["Keys"]["Agent_ID"] != "0" && Request.Cookies["Keys"]["Agent_ID"] != "1")
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "$('#tbData > thead > tr > th:nth-child(14) , #tbData > tbody > tr > td:nth-child(14), #tbData > tfoot > tr > td:nth-child(14)').css('display', 'none');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "setDataLanguage();", true);
+
+                if (eventPaging.Value != "paging")
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "GetData(" + _idTotal.ToString() + ");", true);
+                }
             }
-
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "setDataLanguage();", true);
-            //ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "$('#myModalLoad').modal('hide');", true);
-
-            if (eventPaging.Value != "paging")
+            catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "GetData(" + _idTotal.ToString() + ");", true);
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
             }
         }
 
@@ -447,90 +429,99 @@ namespace Support_Project.Menu_Dasboard
 
         public void AddDashboard_click(Object sender, EventArgs e)
         {
-            List<string> allFile = new List<string>();
-            if (AttahcFile1.PostedFile != null && AttahcFile1.PostedFile.ContentLength > 0)
-            {
-                string fileName = Path.GetFileName(AttahcFile1.PostedFile.FileName);
-                string folder = Server.MapPath("~/FileAttach/");
-                Directory.CreateDirectory(folder);
-                Guid obj = Guid.NewGuid();
-                string nameFile = obj.ToString();
-                string strpath = System.IO.Path.GetExtension(AttahcFile1.FileName);
-                AttahcFile1.PostedFile.SaveAs(Path.Combine(folder, nameFile + strpath));
-                allFile.Add(nameFile + strpath);
-            }
-
-            if (AttahcFile2.PostedFile != null && AttahcFile2.PostedFile.ContentLength > 0)
-            {
-                string fileName = Path.GetFileName(AttahcFile2.PostedFile.FileName);
-                string folder = Server.MapPath("~/FileAttach/");
-                Directory.CreateDirectory(folder);
-                Guid obj = Guid.NewGuid();
-                string nameFile = obj.ToString();
-                string strpath = System.IO.Path.GetExtension(AttahcFile2.FileName);
-                AttahcFile2.PostedFile.SaveAs(Path.Combine(folder, nameFile + strpath));
-                allFile.Add(nameFile + strpath);
-            }
-
-            if (AttahcFile3.PostedFile != null && AttahcFile3.PostedFile.ContentLength > 0)
-            {
-                string fileName = Path.GetFileName(AttahcFile3.PostedFile.FileName);
-                string folder = Server.MapPath("~/FileAttach/");
-                Directory.CreateDirectory(folder);
-                Guid obj = Guid.NewGuid();
-                string nameFile = obj.ToString();
-                string strpath = System.IO.Path.GetExtension(AttahcFile3.FileName);
-                AttahcFile3.PostedFile.SaveAs(Path.Combine(folder, nameFile + strpath));
-                allFile.Add(nameFile + strpath);
-            }
-
-            if (AttahcFile4.PostedFile != null && AttahcFile4.PostedFile.ContentLength > 0)
-            {
-                string fileName = Path.GetFileName(AttahcFile4.PostedFile.FileName);
-                string folder = Server.MapPath("~/FileAttach/");
-                Directory.CreateDirectory(folder);
-                Guid obj = Guid.NewGuid();
-                string nameFile = obj.ToString();
-                string strpath = System.IO.Path.GetExtension(AttahcFile4.FileName);
-                AttahcFile4.PostedFile.SaveAs(Path.Combine(folder, nameFile + strpath));
-                allFile.Add(nameFile + strpath);
-            }
-
-            if (AttahcFile5.PostedFile != null && AttahcFile5.PostedFile.ContentLength > 0)
-            {
-                string fileName = Path.GetFileName(AttahcFile5.PostedFile.FileName);
-                string folder = Server.MapPath("~/FileAttach/");
-                Directory.CreateDirectory(folder);
-                Guid obj = Guid.NewGuid();
-                string nameFile = obj.ToString();
-                string strpath = System.IO.Path.GetExtension(AttahcFile5.FileName);
-                AttahcFile5.PostedFile.SaveAs(Path.Combine(folder, nameFile + strpath));
-                allFile.Add(nameFile + strpath);
-            }
-
-            string allFileAttach = string.Join(",", allFile.ToArray());
             try
             {
-                int _id = _sql.AddDashboard(product.Text, agent.Text, int.Parse(CategoryAdd.Value), allFileAttach, int.Parse(Request.Cookies["Keys"]["ID"]), int.Parse(LevelAdd.Value), Website.Text, Username.Text, Password.Text, Problem.Text, Troubleshooting.Text, Afterfirstfixed.Text, Other.Text, int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
-                if (_id != 0)
+                List<string> allFile = new List<string>();
+                if (AttahcFile1.PostedFile != null && AttahcFile1.PostedFile.ContentLength > 0)
                 {
-                    //ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Add new dashboard success.');", true);
-                    //SearchData("");
-                    Response.Redirect("../Menu_Dashboard/Report.aspx");
+                    string fileName = Path.GetFileName(AttahcFile1.PostedFile.FileName);
+                    string folder = Server.MapPath("~/FileAttach/");
+                    Directory.CreateDirectory(folder);
+                    Guid obj = Guid.NewGuid();
+                    string nameFile = obj.ToString();
+                    string strpath = System.IO.Path.GetExtension(AttahcFile1.FileName);
+                    AttahcFile1.PostedFile.SaveAs(Path.Combine(folder, nameFile + strpath));
+                    allFile.Add(nameFile + strpath);
                 }
-                else
+
+                if (AttahcFile2.PostedFile != null && AttahcFile2.PostedFile.ContentLength > 0)
+                {
+                    string fileName = Path.GetFileName(AttahcFile2.PostedFile.FileName);
+                    string folder = Server.MapPath("~/FileAttach/");
+                    Directory.CreateDirectory(folder);
+                    Guid obj = Guid.NewGuid();
+                    string nameFile = obj.ToString();
+                    string strpath = System.IO.Path.GetExtension(AttahcFile2.FileName);
+                    AttahcFile2.PostedFile.SaveAs(Path.Combine(folder, nameFile + strpath));
+                    allFile.Add(nameFile + strpath);
+                }
+
+                if (AttahcFile3.PostedFile != null && AttahcFile3.PostedFile.ContentLength > 0)
+                {
+                    string fileName = Path.GetFileName(AttahcFile3.PostedFile.FileName);
+                    string folder = Server.MapPath("~/FileAttach/");
+                    Directory.CreateDirectory(folder);
+                    Guid obj = Guid.NewGuid();
+                    string nameFile = obj.ToString();
+                    string strpath = System.IO.Path.GetExtension(AttahcFile3.FileName);
+                    AttahcFile3.PostedFile.SaveAs(Path.Combine(folder, nameFile + strpath));
+                    allFile.Add(nameFile + strpath);
+                }
+
+                if (AttahcFile4.PostedFile != null && AttahcFile4.PostedFile.ContentLength > 0)
+                {
+                    string fileName = Path.GetFileName(AttahcFile4.PostedFile.FileName);
+                    string folder = Server.MapPath("~/FileAttach/");
+                    Directory.CreateDirectory(folder);
+                    Guid obj = Guid.NewGuid();
+                    string nameFile = obj.ToString();
+                    string strpath = System.IO.Path.GetExtension(AttahcFile4.FileName);
+                    AttahcFile4.PostedFile.SaveAs(Path.Combine(folder, nameFile + strpath));
+                    allFile.Add(nameFile + strpath);
+                }
+
+                if (AttahcFile5.PostedFile != null && AttahcFile5.PostedFile.ContentLength > 0)
+                {
+                    string fileName = Path.GetFileName(AttahcFile5.PostedFile.FileName);
+                    string folder = Server.MapPath("~/FileAttach/");
+                    Directory.CreateDirectory(folder);
+                    Guid obj = Guid.NewGuid();
+                    string nameFile = obj.ToString();
+                    string strpath = System.IO.Path.GetExtension(AttahcFile5.FileName);
+                    AttahcFile5.PostedFile.SaveAs(Path.Combine(folder, nameFile + strpath));
+                    allFile.Add(nameFile + strpath);
+                }
+
+                string allFileAttach = string.Join(",", allFile.ToArray());
+                try
+                {
+                    int _id = _sql.AddDashboard(product.Text, agent.Text, int.Parse(CategoryAdd.Value), allFileAttach, int.Parse(Request.Cookies["Keys"]["ID"]), int.Parse(LevelAdd.Value), Website.Text, Username.Text, Password.Text, Problem.Text, Troubleshooting.Text, Afterfirstfixed.Text, Other.Text, int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
+                    if (_id != 0)
+                    {
+                        //ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Add new dashboard success.');", true);
+                        //SearchData("");
+                        Response.Redirect("../Menu_Dashboard/Report.aspx");
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                    }
+                }
+                catch
                 {
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
                 }
-            }
-            catch
+            } 
+            catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
             }
-        }
+}
 
         public void AddPickupDashboard_click(Object sender, EventArgs e)
         {
+            try
+            {
             int _id = _sql.AddPickup(int.Parse(pickupID.Value), int.Parse(Request.Cookies["Keys"]["ID"]), pickupDate.Value);
             if (_id != 0)
             {
@@ -541,33 +532,52 @@ namespace Support_Project.Menu_Dasboard
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
             }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
+            }
         }
 
         public void CloseDashboard_click(Object sender, EventArgs e)
         {
-            int _id = _sql.CloseDashboard(int.Parse(closeID.Value), int.Parse(Request.Cookies["Keys"]["ID"]));
-            if (_id != 0)
+            try
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Close dashboard success.');", true);
-                SearchData("");
+                int _id = _sql.CloseDashboard(int.Parse(closeID.Value), int.Parse(Request.Cookies["Keys"]["ID"]));
+                if (_id != 0)
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Close dashboard success.');", true);
+                    SearchData("");
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
             }
         }
 
         public void CancelDashboard_click(Object sender, EventArgs e)
         {
-            int _id = _sql.CancelDashboard(int.Parse(cancelID.Value), int.Parse(Request.Cookies["Keys"]["ID"]));
-            if (_id != 0)
+            try
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Cancel dashboard success.');", true);
-                SearchData("");
+                int _id = _sql.CancelDashboard(int.Parse(cancelID.Value), int.Parse(Request.Cookies["Keys"]["ID"]));
+                if (_id != 0)
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Cancel dashboard success.');", true);
+                    SearchData("");
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
             }
         }
 
@@ -578,6 +588,7 @@ namespace Support_Project.Menu_Dasboard
 
         public void GetChatData(Object sender)
         {
+            try { 
             DataTable table = new DataTable();
             table = _sql.GetAllChat(int.Parse(chatID.Value), int.Parse(Request.Cookies["Keys"]["ID"]));
             if (table != null && table.Rows.Count > 0)
@@ -658,13 +669,17 @@ namespace Support_Project.Menu_Dasboard
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "$('#tbData > thead > tr > th:nth-child(14) , #tbData > tbody > tr > td:nth-child(14), #tbData > tfoot > tr > td:nth-child(14)').css('display', 'none');", true);
             }
-            //ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "$('#modalChatDashboard').modal();", true);
             ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "GetImageChat();", true);
-            //ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "$('#myModalLoad').modal('hide');", true);
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
+            }
         }
 
         public void AddChatDashboard_click(Object sender, EventArgs e)
         {
+            try { 
             var statusText = false;
             var status1 = false;
             var status2 = false;
@@ -797,19 +812,31 @@ namespace Support_Project.Menu_Dasboard
                 }
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "alertModal('Chat dashboard success.');", true);
             }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
+            }
         }
 
         public void CancelChat_click(Object sender, EventArgs e)
         {
-            int _id = _sql.CancelChat(int.Parse(cancelChatID.Value));
-            if (_id != 0)
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Unsend chat success.');", true);
-                GetChatData("");
+            try
+            { 
+                int _id = _sql.CancelChat(int.Parse(cancelChatID.Value));
+                if (_id != 0)
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Unsend chat success.');", true);
+                    GetChatData("");
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
             }
         }
     }

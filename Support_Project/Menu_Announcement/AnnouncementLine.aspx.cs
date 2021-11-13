@@ -53,6 +53,7 @@ namespace Support_Project.Menu_Announcement
 
         private void SearchData()
         {
+            try { 
             DataTable table = new DataTable();
             int _idTotal = 0;
             _idTotal = _sql.SearcAnnouncementLineAllPaging(searchDateStart.Value, searchDateTo.Value);
@@ -118,6 +119,11 @@ namespace Support_Project.Menu_Announcement
             if (eventPaging.Value != "paging")
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "GetData(" + _idTotal.ToString() + ");", true);
+            }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
             }
         }
 

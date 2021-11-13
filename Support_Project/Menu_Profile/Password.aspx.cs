@@ -40,6 +40,7 @@ namespace Support_Project.Menu_Profile
 
         public void ChangePass_click(Object sender, EventArgs e)
         {
+            try { 
             int _id = _sql.ChangePassword(int.Parse(Request.Cookies["Keys"]["ID"]), Utility.Encryptdata2(oldpassword.Text), Utility.Encryptdata2(confirmpassword.Text));
             if (_id != 0)
             {
@@ -51,10 +52,16 @@ namespace Support_Project.Menu_Profile
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
             }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
+            }
         }
 
         public void Logout_click(Object sender, EventArgs e)
         {
+            try { 
             var _ip = GetIPAddress();
             DataTable table = new DataTable();
             table = _sql.Logout(int.Parse(Request.Cookies["Keys"]["ID"]), Request.Cookies["Keys"]["Lat"], Request.Cookies["Keys"]["Long"]);
@@ -74,6 +81,11 @@ namespace Support_Project.Menu_Profile
             else
             {
                 Response.Write("Data : " + table.Rows.Count);
+            }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Error : " + ex.Message + "')", true);
             }
         }
 

@@ -25,18 +25,18 @@ namespace Support_Project
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //string[] cookies = Request.Cookies.AllKeys;
-            //bool status = false;
-            //foreach (string cookie in cookies)
-            //{
-            //    if (cookie.ToString() == "Keys")
-            //    {
-            //        status = true;
-            //    }
-            //}
+            string[] cookies = Request.Cookies.AllKeys;
+            bool status = false;
+            foreach (string cookie in cookies)
+            {
+                if (cookie.ToString() == "Keys")
+                {
+                    status = true;
+                }
+            }
 
-            //if (status == true)
-            //{
+            if (status == true)
+            {
                 LoginID.Value = Request.Cookies["Keys"]["ID"];
                 LoginUser.Value = Request.Cookies["Keys"]["Username"];
                 LoginPosi.Value = Request.Cookies["Keys"]["Position"];
@@ -45,12 +45,12 @@ namespace Support_Project
                 AgentName.Value = Request.Cookies["Keys"]["Agent_Name"];
                 ToeknID.Value = Request.Cookies["Keys"]["Token_ID"];
                 SubAccount.Value = Request.Cookies["Keys"]["SubAccount"];
-            //}
-            //else
-            //{
-            //    Response.Redirect("../Login.aspx");
-            //}
         }
+            else
+            {
+                Response.Redirect("../Login.aspx");
+            }
+}
 
         public void Logout_click(Object sender, EventArgs e)
         {
