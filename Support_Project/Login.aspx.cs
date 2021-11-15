@@ -19,7 +19,6 @@ namespace Support_Project
     public partial class Login : System.Web.UI.Page
     {
         SqlManager _sql = new SqlManager();
-
         String AuthenticationCode
         {
             get
@@ -161,7 +160,7 @@ namespace Support_Project
                 Boolean status = ValidateTwoFactorPIN(pin);
                 if (status)
                 {
-                    var _id = _sql.UsedCodeGUID(Convert.ToInt32(Request.Cookies["Keys"]["ID"].ToString()));
+                    var _id = _sql.UsedCodeGUID(int.Parse(Request.Cookies["Keys"]["ID"].ToString()));
                     if (_id == null || _id == "")
                     {
                         lblResult.Visible = true;
@@ -213,7 +212,7 @@ namespace Support_Project
             if (_id == null || _id == "")
             {
                 Guid guid = Guid.NewGuid();
-                int __id = _sql.AddGUIDLogin(int.Parse(Request.Cookies["Keys"]["ID"]), guid.ToString());
+                int __id = _sql.AddGUIDLogin(userID, guid.ToString());
                 if (__id != 0)
                 {
                     uniqueUserKey = Convert.ToString(guid).Replace("-", "").Substring(0, 10);

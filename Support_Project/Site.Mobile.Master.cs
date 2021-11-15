@@ -58,7 +58,7 @@ namespace Support_Project
 
                 HttpCookie currentUserCookie = Request.Cookies["Keys"];
                 Response.Cookies.Remove("Keys");
-                currentUserCookie.Expires = DateTime.Now.AddDays(-10);
+                currentUserCookie.Expires = DateTime.Now.AddDays(-1D);
                 currentUserCookie.Value = null;
                 Response.SetCookie(currentUserCookie);
 
@@ -74,7 +74,7 @@ namespace Support_Project
         {
             HttpCookie currentUserCookie = Request.Cookies["Keys"];
             Response.Cookies.Remove("Keys");
-            currentUserCookie.Expires = DateTime.Now.AddDays(-10);
+            currentUserCookie.Expires = DateTime.Now.AddDays(-1D);
             currentUserCookie.Value = null;
             Response.SetCookie(currentUserCookie);
             Response.Redirect("../Login.aspx");

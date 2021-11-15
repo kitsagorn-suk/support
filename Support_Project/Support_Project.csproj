@@ -1133,7 +1133,6 @@
     <Content Include="Menu_Profile\Password.aspx" />
     <Content Include="Menu_Sportbook\Sportbook.aspx" />
     <Content Include="Menu_TaskCalendar\Timeline_Add.aspx" />
-    <Content Include="Authen.aspx" />
     <Content Include="WebService.asmx" />
     <Content Include="FileManual\How to use support system ENG.pdf" />
     <Content Include="FileManual\How to use support system TH.pdf" />
@@ -1570,13 +1569,6 @@
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
-    <Compile Include="Authen.aspx.cs">
-      <DependentUpon>Authen.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Authen.aspx.designer.cs">
-      <DependentUpon>Authen.aspx</DependentUpon>
-    </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -374,7 +374,7 @@
                 $("#menuManagementAgent, #menuManagementAgentAdd").css("display", "initial");
             }
 
-            if ($("#<%=ShareIDLogin.ClientID%>").val() != "0" && $("#<%=AgentIDLogin.ClientID%>").val() != "0") {
+            if ($("#<%=LoginID.ClientID%>").val() != "2") {
                 $("#menuManagementShare, #menuManagementShareAdd").remove();
             }
 
