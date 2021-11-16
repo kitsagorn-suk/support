@@ -89,7 +89,7 @@ namespace Support_Project.Menu_Management_Main
             try { 
             if (getParent.Value == "No")
             {
-                AgentIDSearch.Value = Request.Cookies["Keys"]["Agent_Master"];
+                AgentIDSearch.Value = _sql.allAgentMaster();
             }
 
             if (searchName.Text == "" && getParent.Value == "No")

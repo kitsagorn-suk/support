@@ -46,7 +46,7 @@ namespace Support_Project.Menu_Announcement
         {
             try
             {
-                ddlAgent.DataSource = _sql.getAllAgent(int.Parse(Request.Cookies["Keys"]["Company_ID"]), Request.Cookies["Keys"]["Agent_Master"], int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
+                ddlAgent.DataSource = _sql.getAllAgent(int.Parse(Request.Cookies["Keys"]["Company_ID"]), _sql.allAgentMaster(), int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
                 ddlAgent.DataBind();
                 ddlAgent.Items.Insert(0, new ListItem("Select agent", ""));
                 ddlAgent.Items.Insert(1, new ListItem("All", "0"));

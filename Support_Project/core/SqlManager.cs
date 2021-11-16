@@ -16,6 +16,59 @@ namespace Support_Project.core
         public static string LoginPosition;
         public static string LoginID;
 
+        public List<String> getAgent(int agentID)
+        {
+            var arrAgent = new List<String>();
+            DataTable tableAgent = new DataTable();
+            tableAgent = GetMasterAgent(agentID);
+            if (tableAgent.Rows.Count > 0 && tableAgent != null)
+            {
+                foreach (DataRow row in tableAgent.Rows)
+                {
+                    arrAgent.Add(row["id"].ToString());
+                    var total = getAgent(int.Parse(row["id"].ToString()));
+                    foreach (String item in total)
+                    {
+                        arrAgent.Add(item);
+                    }
+                }
+            }
+
+            return arrAgent;
+        }
+
+        public String allAgentMaster()
+        {
+
+            var arrAgentMasterAll = "";
+            var arrAgentMaster = new List<String>();
+            DataTable tableAgent = new DataTable();
+            tableAgent = GetMasterAgent(int.Parse(System.Web.HttpContext.Current.Request.Cookies["Keys"]["Agent_ID"]));
+            if (tableAgent.Rows.Count > 0 && tableAgent != null)
+            {
+                try
+                {
+                    foreach (DataRow row in tableAgent.Rows)
+                    {
+                        arrAgentMaster.Add(row["id"].ToString());
+                        var total = getAgent(int.Parse(row["id"].ToString()));
+                        foreach (String item in total)
+                        {
+                            arrAgentMaster.Add(item);
+                        }
+                    }
+                }
+                catch(Exception ex)
+                {
+
+                }
+            }
+
+            arrAgentMaster.Add(System.Web.HttpContext.Current.Request.Cookies["Keys"]["Agent_ID"]);
+            arrAgentMasterAll = String.Join(",", arrAgentMaster);
+            return arrAgentMasterAll;
+        }
+
         public int LockAgent(int pID, int pCancelBy)
         {
             int id = 0;
@@ -1636,7 +1689,7 @@ namespace Support_Project.core
             return id;
         }
 
-        public DataTable SearchDashboard(string pTextSearch, int pUserID, string pDateFrom, string pDateTo, int pCategories, string pStatus, int pAgentID, int pPage, int pPerPage, string pAllAgentID)
+        public DataTable SearchDashboard(string pTextSearch, int pUserID, string pDateFrom, string pDateTo, int pCategories, string pStatus, int pAgentID, int pPage, int pPerPage, String pAllAgentID)
         {
             DataTable table = new DataTable();
             SQLCustomExecute sql = new SQLCustomExecute("exec get_search_dashboard @pTextSearch, @pUserID, @pDateFrom, @pDateTo, @pCategories, @pStatus, @pAgentID, @pPage, @pPerPage, @pAllAgentID");
@@ -1677,7 +1730,7 @@ namespace Support_Project.core
             paramPerPage.Direction = ParameterDirection.Input;
             paramPerPage.Value = pPerPage;
 
-            SqlParameter paramAllAgentID = new SqlParameter(@"pAllAgentID", SqlDbType.VarChar, 8000);
+            SqlParameter paramAllAgentID = new SqlParameter(@"pAllAgentID", SqlDbType.Text);
             paramAllAgentID.Direction = ParameterDirection.Input;
             paramAllAgentID.Value = pAllAgentID;
 
@@ -1697,7 +1750,7 @@ namespace Support_Project.core
             return table;
         }
 
-        public int SearchDashboardPaging(string pTextSearch, int pUserID, string pDateFrom, string pDateTo, int pCategories, string pStatus, int pAgentID, string pAllAgentID)
+        public int SearchDashboardPaging(string pTextSearch, int pUserID, string pDateFrom, string pDateTo, int pCategories, string pStatus, int pAgentID, String pAllAgentID)
         {
             int id = 0;
 
@@ -1732,7 +1785,7 @@ namespace Support_Project.core
             paramAgentID.Direction = ParameterDirection.Input;
             paramAgentID.Value = pAgentID;
 
-            SqlParameter paramAllAgentID = new SqlParameter(@"pAllAgentID", SqlDbType.VarChar, 8000);
+            SqlParameter paramAllAgentID = new SqlParameter(@"pAllAgentID", SqlDbType.Text);
             paramAllAgentID.Direction = ParameterDirection.Input;
             paramAllAgentID.Value = pAllAgentID;
 

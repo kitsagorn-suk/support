@@ -62,7 +62,7 @@ namespace Support_Project.Menu_Feedback
         {
             try
             {
-                ddlAgentSearch.DataSource = _sql.getAllAgent(int.Parse(Request.Cookies["Keys"]["Company_ID"]), Request.Cookies["Keys"]["Agent_Master"], int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
+                ddlAgentSearch.DataSource = _sql.getAllAgent(int.Parse(Request.Cookies["Keys"]["Company_ID"]), _sql.allAgentMaster(), int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
                 ddlAgentSearch.DataBind();
                 ddlAgentSearch.Items.Insert(0, new ListItem("All", "0"));
 

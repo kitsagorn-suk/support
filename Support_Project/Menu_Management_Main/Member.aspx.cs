@@ -54,7 +54,7 @@ namespace Support_Project.Menu_Management_Main
                         ddllevelSearch.Items.Insert(0, new ListItem("All", "0"));
 
                         ddlAgentSearch.Items.Clear();
-                        ddlAgentSearch.DataSource = _sql.getAllAgent(int.Parse(Request.Cookies["Keys"]["Company_ID"].ToString()), Request.Cookies["Keys"]["Agent_Master"], int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
+                        ddlAgentSearch.DataSource = _sql.getAllAgent(int.Parse(Request.Cookies["Keys"]["Company_ID"].ToString()), _sql.allAgentMaster(), int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
                         ddlAgentSearch.DataBind();
                         ddlAgentSearch.Items.Insert(0, new ListItem("All", "0"));
                         //ddlAgentSearch.SelectedValue = Request.Cookies["Keys"]["Agent_ID"].ToString();
@@ -115,7 +115,7 @@ namespace Support_Project.Menu_Management_Main
             ddlCompany.DataBind();
             ddlCompany.Items.Insert(0, new ListItem("Select company", ""));
 
-            ddlAgent.DataSource = _sql.getAllAgent(int.Parse(CompanyView.Value), Request.Cookies["Keys"]["Agent_Master"], int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
+            ddlAgent.DataSource = _sql.getAllAgent(int.Parse(CompanyView.Value), _sql.allAgentMaster(), int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
             ddlAgent.DataBind();
             ddlAgent.Items.Insert(0, new ListItem("Select agent", ""));
 
@@ -126,7 +126,7 @@ namespace Support_Project.Menu_Management_Main
         {
             ddlAgentSearch.Items.Clear();
 
-            ddlAgentSearch.DataSource = _sql.getAllAgent(int.Parse(ddlCompanySearch.SelectedValue), Request.Cookies["Keys"]["Agent_Master"], int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
+            ddlAgentSearch.DataSource = _sql.getAllAgent(int.Parse(ddlCompanySearch.SelectedValue), _sql.allAgentMaster(), int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
             ddlAgentSearch.DataBind();
             ddlAgentSearch.Items.Insert(0, new ListItem("All", "0"));
 
@@ -137,7 +137,7 @@ namespace Support_Project.Menu_Management_Main
         {
             ddlAgent.Items.Clear();
 
-            ddlAgent.DataSource = _sql.getAllAgent(int.Parse(ddlCompany.SelectedValue), Request.Cookies["Keys"]["Agent_Master"], int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
+            ddlAgent.DataSource = _sql.getAllAgent(int.Parse(ddlCompany.SelectedValue), _sql.allAgentMaster(), int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
             ddlAgent.DataBind();
             ddlAgent.Items.Insert(0, new ListItem("Select agent", ""));
 
@@ -245,7 +245,7 @@ namespace Support_Project.Menu_Management_Main
             if (searchUsername.Text != "")
             {
                 //AgentSearch.Value = Request.Cookies["Keys"]["Agent_ID"];
-                masterAgent = Request.Cookies["Keys"]["Agent_Master"];
+                masterAgent = _sql.allAgentMaster();
             }
             else
             {

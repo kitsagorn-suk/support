@@ -82,7 +82,7 @@ namespace Support_Project.Menu_Dasboard
                 }
 
                 int _idTotal = 0;
-                _idTotal = _sql.SearchDashboardPaging(searchProduct.Text, int.Parse(MyTask.Value), searchDateStart.Value, searchDateTo.Value, int.Parse(CategorySearch.Value), StatusSearch.Value, int.Parse(Request.Cookies["Keys"]["Agent_ID"]), Request.Cookies["Keys"]["Agent_Master"]);
+                _idTotal = _sql.SearchDashboardPaging(searchProduct.Text, int.Parse(MyTask.Value), searchDateStart.Value, searchDateTo.Value, int.Parse(CategorySearch.Value), StatusSearch.Value, int.Parse(Request.Cookies["Keys"]["Agent_ID"]), _sql.allAgentMaster());
                 totalDocs.Value = _idTotal.ToString();
 
                 if (thisPage.Value == "" || thisPage.Value == null)
@@ -95,7 +95,7 @@ namespace Support_Project.Menu_Dasboard
                 }
 
                 string perPage = WebConfigurationManager.AppSettings["perPage"];
-                table = _sql.SearchDashboard(searchProduct.Text, int.Parse(MyTask.Value), searchDateStart.Value, searchDateTo.Value, int.Parse(CategorySearch.Value), StatusSearch.Value, int.Parse(Request.Cookies["Keys"]["Agent_ID"]), int.Parse(PageNow), int.Parse(perPage), Request.Cookies["Keys"]["Agent_Master"]);
+                table = _sql.SearchDashboard(searchProduct.Text, int.Parse(MyTask.Value), searchDateStart.Value, searchDateTo.Value, int.Parse(CategorySearch.Value), StatusSearch.Value, int.Parse(Request.Cookies["Keys"]["Agent_ID"]), int.Parse(PageNow), int.Parse(perPage), _sql.allAgentMaster());
                 if (table != null && table.Rows.Count > 0)
                 {
                     var i = 1;

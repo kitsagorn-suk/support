@@ -74,7 +74,7 @@ namespace Support_Project.Menu_Management_Main
 
                     ddlAgent.Items.Clear();
 
-                    ddlAgent.DataSource = _sql.getAllAgent(int.Parse(Request.Cookies["Keys"]["Company_ID"]), Request.Cookies["Keys"]["Agent_Master"], int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
+                    ddlAgent.DataSource = _sql.getAllAgent(int.Parse(Request.Cookies["Keys"]["Company_ID"]), _sql.allAgentMaster(), int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
                     ddlAgent.DataBind();
                     ddlAgent.Items.Insert(0, new ListItem("Select agent", ""));
 
@@ -94,7 +94,7 @@ namespace Support_Project.Menu_Management_Main
         {
             ddlAgent.Items.Clear();
 
-            ddlAgent.DataSource = _sql.getAllAgent(int.Parse(ddlCompany.SelectedValue), Request.Cookies["Keys"]["Agent_Master"], int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
+            ddlAgent.DataSource = _sql.getAllAgent(int.Parse(ddlCompany.SelectedValue), _sql.allAgentMaster(), int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
             ddlAgent.DataBind();
             ddlAgent.Items.Insert(0, new ListItem("Select agent", ""));
 
