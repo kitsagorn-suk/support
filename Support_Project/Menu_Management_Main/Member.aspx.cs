@@ -98,7 +98,7 @@ namespace Support_Project.Menu_Management_Main
 
                 ddlAgentSearch.Items.Insert(0, new ListItem("All", "0"));
 
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "SetLan(localStorage.getItem('Language'));", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "SetLan", "SetLan(localStorage.getItem('Language'));", true);
             }
             catch (Exception ex)
             {
@@ -120,7 +120,7 @@ namespace Support_Project.Menu_Management_Main
             ddlAgent.DataBind();
             ddlAgent.Items.Insert(0, new ListItem("Select agent", ""));
 
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "getViewModal();", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "getViewModal", "getViewModal();", true);
         }
 
         protected void getDropdownAgentSearch(object sender, EventArgs e)
@@ -131,7 +131,7 @@ namespace Support_Project.Menu_Management_Main
             ddlAgentSearch.DataBind();
             ddlAgentSearch.Items.Insert(0, new ListItem("All", "0"));
 
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "SetLan(localStorage.getItem('Language'));", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "SetLan", "SetLan(localStorage.getItem('Language'));", true);
         }
 
         protected void getDropdownAgent(object sender, EventArgs e)
@@ -142,7 +142,7 @@ namespace Support_Project.Menu_Management_Main
             ddlAgent.DataBind();
             ddlAgent.Items.Insert(0, new ListItem("Select agent", ""));
 
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "disDropdown();", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "disDropdown", "disDropdown();", true);
         }
 
         public void DeleteMember_click(Object sender, EventArgs e)
@@ -151,12 +151,12 @@ namespace Support_Project.Menu_Management_Main
             int _idDel = _sql.DeleteMember(int.Parse(IDDelete.Value), int.Parse(Request.Cookies["Keys"]["ID"]));
             if (_idDel != 0)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Delete account success.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Delete account success.');", true);
                 SearchData();
             }
             else
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
             }
             }
             catch (Exception ex)
@@ -171,12 +171,12 @@ namespace Support_Project.Menu_Management_Main
             int _idDel = _sql.ReQR(int.Parse(IDReQR.Value));
             if (_idDel != 0)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Reset QR success.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Reset QR success.');", true);
                 SearchData();
             }
             else
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
             }
             }
             catch (Exception ex)
@@ -194,17 +194,17 @@ namespace Support_Project.Menu_Management_Main
                 int _id = _sql.EditMember(int.Parse(IDEdit.Value), username.Text, Utility.Encryptdata2(password.Text), int.Parse(LevelEdit.Value), contact.Text, int.Parse(Request.Cookies["Keys"]["ID"]), int.Parse(StatusEdit.Value), name.Text, int.Parse(CompanyEdit.Value), int.Parse(AgentEdit.Value));
                 if (_id != 0)
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "alertModal('Edit account success.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Edit account success.');", true);
                     SearchData();
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
                 }
             }
             else
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModalDuplicate('Username is duplicate.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModalDuplicate", "alertModalDuplicate('Username is duplicate.');", true);
             }
             }
             catch (Exception ex)
@@ -220,158 +220,159 @@ namespace Support_Project.Menu_Management_Main
 
         private void SearchData()
         {
-            try { 
-            DataTable table = new DataTable();
+            try
+            { 
+                DataTable table = new DataTable();
 
-            LevelSearch.Value = ddllevelSearch.SelectedValue;
-            CompanySearch.Value = ddlCompanySearch.SelectedValue;
+                LevelSearch.Value = ddllevelSearch.SelectedValue;
+                CompanySearch.Value = ddlCompanySearch.SelectedValue;
 
-            if (getParent.Value == "No")
-            {
-                MemberSearch.Value = Request.Cookies["Keys"]["ID"];
-            }
-            else
-            {
-                MemberSearch.Value = MemberIDSearch.Value;
-            }
-
-            AgentSearch.Value = AgentIDSearch.Value;
-
-            if (searchUsername.Text == "" && getParent.Value == "No" && AgentSearch.Value == "0")
-            {
-                AgentSearch.Value = Request.Cookies["Keys"]["Agent_ID"];
-            }
-
-            var masterAgent = "";
-            if (searchUsername.Text != "")
-            {
-                //AgentSearch.Value = Request.Cookies["Keys"]["Agent_ID"];
-                masterAgent = allagentmaster;
-            }
-            else
-            {
-                var arrAgentMaster = new List<string>();
-                DataTable tableAgent = new DataTable();
-                tableAgent = _sql.GetMasterAgent(int.Parse(AgentSearch.Value));
-                int c = 1;
-                if (tableAgent.Rows.Count > 0)
+                if (getParent.Value == "No")
                 {
-                    foreach (DataRow row in tableAgent.Rows)
+                    MemberSearch.Value = Request.Cookies["Keys"]["ID"];
+                }
+                else
+                {
+                    MemberSearch.Value = MemberIDSearch.Value;
+                }
+
+                AgentSearch.Value = AgentIDSearch.Value;
+
+                if (searchUsername.Text == "" && getParent.Value == "No" && AgentSearch.Value == "0")
+                {
+                    AgentSearch.Value = Request.Cookies["Keys"]["Agent_ID"];
+                }
+
+                var masterAgent = "";
+                if (searchUsername.Text != "")
+                {
+                    //AgentSearch.Value = Request.Cookies["Keys"]["Agent_ID"];
+                    masterAgent = _sql.allAgentMaster();
+                }
+                else
+                {
+                    var arrAgentMaster = new List<string>();
+                    DataTable tableAgent = new DataTable();
+                    tableAgent = _sql.GetMasterAgent(int.Parse(AgentSearch.Value));
+                    int c = 1;
+                    if (tableAgent.Rows.Count > 0)
                     {
-                        if (c == 1)
+                        foreach (DataRow row in tableAgent.Rows)
                         {
-                            arrAgentMaster.Add(row["id"].ToString());
+                            if (c == 1)
+                            {
+                                arrAgentMaster.Add(row["id"].ToString());
+                            }
                         }
                     }
+                    masterAgent = string.Join(",", arrAgentMaster);
                 }
-                masterAgent = string.Join(",", arrAgentMaster);
-            }
 
-            int _idTotal = 0;
-            _idTotal = _sql.SearchMemberPaging(searchUsername.Text, int.Parse(LevelSearch.Value), masterAgent, int.Parse(CompanySearch.Value), int.Parse(MemberSearch.Value), int.Parse(AgentSearch.Value));
+                int _idTotal = 0;
+                _idTotal = _sql.SearchMemberPaging(searchUsername.Text, int.Parse(LevelSearch.Value), masterAgent, int.Parse(CompanySearch.Value), int.Parse(MemberSearch.Value), int.Parse(AgentSearch.Value));
 
-            totalDocs.Value = _idTotal.ToString();
+                totalDocs.Value = _idTotal.ToString();
 
-            if (thisPage.Value == "" || thisPage.Value == null)
-            {
-                PageNow = "1";
-            }
-            else
-            {
-                PageNow = thisPage.Value;
-            }           
-
-            StringBuilder sb = new StringBuilder();
-            var no = 1;
-            table = _sql.SearchMember(searchUsername.Text, int.Parse(LevelSearch.Value), masterAgent, int.Parse(CompanySearch.Value), int.Parse(PageNow), 100, int.Parse(MemberSearch.Value), int.Parse(AgentSearch.Value));
-            if (table != null && table.Rows.Count > 0)
-            {
-                foreach (DataRow row in table.Rows)
+                if (thisPage.Value == "" || thisPage.Value == null)
                 {
-                    sb.Append("<tr>");
-                    sb.Append("<td style='text-align: center;'>" + (((int.Parse(PageNow) - 1) * 100) + no) + "</td>");
-                    if (int.Parse(row["count_parent"].ToString()) > 0)
-                    {
-                        sb.Append("<td><a class='link overflowTable ellipsis' title='" + row["username"].ToString() + "' onclick='getParentAgent(" + row["id"].ToString() + " , \"" + row["username"].ToString() + "\", " + row["agent_id"].ToString() + ");'>" + row["username"].ToString() + "</a></td>");
-                    }
-                    else
-                    {
-                        sb.Append("<td><p class='overflowTable ellipsis' title='" + row["username"].ToString() + "'>" + row["username"].ToString() + "</p></td>");
-                    }
-                    sb.Append("<td><p class='overflowTable ellipsis' title='" + row["fullname"].ToString() + "'>" + row["fullname"].ToString() + "</p></td>");
-                    if (row["contact"].ToString() != "" && row["contact"].ToString() != null)
-                    {
-                        sb.Append("<td><a style='text-decoration: underline;' class='overflowTable ellipsis' href='tel: +" + row["contact"].ToString() + "' title='" + row["contact"].ToString() + "'>" + row["contact"].ToString() + "</a></td>");
-                    }
-                    else
-                    {
-                        sb.Append("<td>-</td>");
-                    }
-                    sb.Append("<td style='text-align: center;'>" + row["role_name"].ToString() + "</td>");
+                    PageNow = "1";
+                }
+                else
+                {
+                    PageNow = thisPage.Value;
+                }           
 
-                    sb.Append("<td><p class='overflowTable ellipsis' title='" + row["shareholder_name"].ToString() + "'>" + row["shareholder_name"].ToString() + "</p></td>");
-                    sb.Append("<td><p class='overflowTable ellipsis' title='" + row["agent_name"].ToString() + "'>" + row["agent_name"].ToString() + "</p></td>");
-
-                    var dateLogin = "";
-                    if (row["login_date"].ToString() != "" && row["login_date"].ToString() != null)
+                StringBuilder sb = new StringBuilder();
+                var no = 1;
+                table = _sql.SearchMember(searchUsername.Text, int.Parse(LevelSearch.Value), masterAgent, int.Parse(CompanySearch.Value), int.Parse(PageNow), 100, int.Parse(MemberSearch.Value), int.Parse(AgentSearch.Value));
+                if (table != null && table.Rows.Count > 0)
+                {
+                    foreach (DataRow row in table.Rows)
                     {
-                        DateTime oDateLog = Convert.ToDateTime(row["login_date"].ToString());
-                        string xLog = oDateLog.ToString("dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
-                        dateLogin = xLog;
-                    }
-                    else
-                    {
-                        dateLogin = "-";
-                    }
-                    var dateCreated = "";
-                    if (row["create_date"].ToString() != "" && row["create_date"].ToString() != null)
-                    {
-                        DateTime oDateCreate = Convert.ToDateTime(row["create_date"].ToString());
-                        string xCreate = oDateCreate.ToString("dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
-                        dateCreated = xCreate;
-                    }
-                    else
-                    {
-                        dateCreated = "-";
-                    }
-
-                    sb.Append("<td style='text-align: center;'>" + dateLogin.ToString() + "</td>");
-                    sb.Append("<td style='text-align: center;'>" + dateCreated.ToString() + "</td>");
-                    sb.Append("<td style='text-align: center;'>" + row["status"].ToString() + "</td>");
-
-                    if (Request.Cookies["Keys"]["Position"] == "Master" || Request.Cookies["Keys"]["Position"] == "Super User")
-                    {
-                        if (row["create_by"].ToString() == Request.Cookies["Keys"]["ID"] || Request.Cookies["Keys"]["ID"] == "2")
+                        sb.Append("<tr>");
+                        sb.Append("<td style='text-align: center;'>" + (((int.Parse(PageNow) - 1) * 100) + no) + "</td>");
+                        if (int.Parse(row["count_parent"].ToString()) > 0)
                         {
-                            sb.Append("<td style='text-align: center;'><a class='link' onclick='viewReQR(\"" + row["id"].ToString() + "\");'><i class='fas fa-sync-alt'></i></a>&emsp;<a class='link' attr-fullname='" + row["fullname"].ToString() + "' attr-id='" + row["id"].ToString() + "' attr-username='" + row["username"].ToString() + "' attr-password='" + Utility.Decryptdata(row["password"].ToString()) + "' attr-contact='" + row["contact"].ToString() + "' attr-role='" + row["role_name"].ToString() + "' attr-agent='" + row["agent_id"].ToString() + "' attr-share='" + row["shareholder_id"].ToString() + "' attr-status='" + row["is_active"].ToString() + "' onclick='viewEdit(this);'><i class='fas fa-pencil-alt'></i></a>&emsp;<a class='link' onclick='viewDelete(\"" + row["id"].ToString() + "\");'><i class='fas fa-trash'></i></a></td>");
+                            sb.Append("<td><a class='link overflowTable ellipsis' title='" + row["username"].ToString() + "' onclick='getParentAgent(" + row["id"].ToString() + " , \"" + row["username"].ToString() + "\", " + row["agent_id"].ToString() + ");'>" + row["username"].ToString() + "</a></td>");
+                        }
+                        else
+                        {
+                            sb.Append("<td><p class='overflowTable ellipsis' title='" + row["username"].ToString() + "'>" + row["username"].ToString() + "</p></td>");
+                        }
+                        sb.Append("<td><p class='overflowTable ellipsis' title='" + row["fullname"].ToString() + "'>" + row["fullname"].ToString() + "</p></td>");
+                        if (row["contact"].ToString() != "" && row["contact"].ToString() != null)
+                        {
+                            sb.Append("<td><a style='text-decoration: underline;' class='overflowTable ellipsis' href='tel: +" + row["contact"].ToString() + "' title='" + row["contact"].ToString() + "'>" + row["contact"].ToString() + "</a></td>");
+                        }
+                        else
+                        {
+                            sb.Append("<td>-</td>");
+                        }
+                        sb.Append("<td style='text-align: center;'>" + row["role_name"].ToString() + "</td>");
+
+                        sb.Append("<td><p class='overflowTable ellipsis' title='" + row["shareholder_name"].ToString() + "'>" + row["shareholder_name"].ToString() + "</p></td>");
+                        sb.Append("<td><p class='overflowTable ellipsis' title='" + row["agent_name"].ToString() + "'>" + row["agent_name"].ToString() + "</p></td>");
+
+                        var dateLogin = "";
+                        if (row["login_date"].ToString() != "" && row["login_date"].ToString() != null)
+                        {
+                            DateTime oDateLog = Convert.ToDateTime(row["login_date"].ToString());
+                            string xLog = oDateLog.ToString("dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
+                            dateLogin = xLog;
+                        }
+                        else
+                        {
+                            dateLogin = "-";
+                        }
+                        var dateCreated = "";
+                        if (row["create_date"].ToString() != "" && row["create_date"].ToString() != null)
+                        {
+                            DateTime oDateCreate = Convert.ToDateTime(row["create_date"].ToString());
+                            string xCreate = oDateCreate.ToString("dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
+                            dateCreated = xCreate;
+                        }
+                        else
+                        {
+                            dateCreated = "-";
+                        }
+
+                        sb.Append("<td style='text-align: center;'>" + dateLogin.ToString() + "</td>");
+                        sb.Append("<td style='text-align: center;'>" + dateCreated.ToString() + "</td>");
+                        sb.Append("<td style='text-align: center;'>" + row["status"].ToString() + "</td>");
+
+                        if (Request.Cookies["Keys"]["Position"] == "Master" || Request.Cookies["Keys"]["Position"] == "Super User")
+                        {
+                            if (row["create_by"].ToString() == Request.Cookies["Keys"]["ID"] || Request.Cookies["Keys"]["ID"] == "2")
+                            {
+                                sb.Append("<td style='text-align: center;'><a class='link' onclick='viewReQR(\"" + row["id"].ToString() + "\");'><i class='fas fa-sync-alt'></i></a>&emsp;<a class='link' attr-fullname='" + row["fullname"].ToString() + "' attr-id='" + row["id"].ToString() + "' attr-username='" + row["username"].ToString() + "' attr-password='" + Utility.Decryptdata(row["password"].ToString()) + "' attr-contact='" + row["contact"].ToString() + "' attr-role='" + row["role_name"].ToString() + "' attr-agent='" + row["agent_id"].ToString() + "' attr-share='" + row["shareholder_id"].ToString() + "' attr-status='" + row["is_active"].ToString() + "' onclick='viewEdit(this);'><i class='fas fa-pencil-alt'></i></a>&emsp;<a class='link' onclick='viewDelete(\"" + row["id"].ToString() + "\");'><i class='fas fa-trash'></i></a></td>");
+                            }
+                            else
+                            {
+                                sb.Append("<td style='text-align: center;'><a class='link disabled-link'><i class='fas fa-sync-alt'></i></a>&emsp;<a class='link disabled-link'><i class='fas fa-pencil-alt'></i></a>&emsp;<a class='link disabled-link'><i class='fas fa-trash'></i></a></td>");
+                            }
                         }
                         else
                         {
                             sb.Append("<td style='text-align: center;'><a class='link disabled-link'><i class='fas fa-sync-alt'></i></a>&emsp;<a class='link disabled-link'><i class='fas fa-pencil-alt'></i></a>&emsp;<a class='link disabled-link'><i class='fas fa-trash'></i></a></td>");
                         }
+                        sb.Append("</tr>");
+                        no++;
                     }
-                    else
-                    {
-                        sb.Append("<td style='text-align: center;'><a class='link disabled-link'><i class='fas fa-sync-alt'></i></a>&emsp;<a class='link disabled-link'><i class='fas fa-pencil-alt'></i></a>&emsp;<a class='link disabled-link'><i class='fas fa-trash'></i></a></td>");
-                    }
-                    sb.Append("</tr>");
-                    no++;
                 }
-            }
 
-            if (sb.ToString() == "")
-            {
-                sb.Append("<tr><td colspan='11' style='text-align: center;' set-lan='text:No Data.'></td></tr>");
-            }
+                if (sb.ToString() == "")
+                {
+                    sb.Append("<tr><td colspan='11' style='text-align: center;' set-lan='text:No Data.'></td></tr>");
+                }
 
-            LiteralData.Text = sb.ToString();
+                LiteralData.Text = sb.ToString();
 
-            if (eventPaging.Value != "paging")
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "GetData('" + _idTotal.ToString() + "');", true);
-            }
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "setDataLanguage", "setDataLanguage();", true);
 
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "setDataLanguage();", true);
+                if (eventPaging.Value != "paging")
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "GetData", "GetData('" + _idTotal.ToString() + "');", true);
+                }
             }
             catch (Exception ex)
             {

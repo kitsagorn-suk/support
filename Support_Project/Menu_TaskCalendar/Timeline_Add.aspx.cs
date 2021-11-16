@@ -68,11 +68,11 @@ namespace Support_Project.Menu_TaskCalendar
                 int _id = _sql.AddLeave(LeaveStartDateAdd.Value, LeaveToDateAdd.Value, int.Parse(LeaveTypeAdd.Value), Description.Text, int.Parse(Request.Cookies["Keys"]["ID"]));
                 if (_id != 0)
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Add new leave success.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Add new leave success.');", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
                 }
             }
             catch (Exception ex)

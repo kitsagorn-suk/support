@@ -75,16 +75,16 @@ namespace Support_Project.Menu_Management_Main
                     int _id = _sql.AddSubAccount(username.Text, Utility.Encryptdata2(password.Text), int.Parse(LevelAdd.Value), contact.Text, int.Parse(Request.Cookies["Keys"]["ID"]), name.Text, int.Parse(Request.Cookies["Keys"]["Company_ID"]), int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
                     if (_id != 0)
                     {
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Add new sub account success.');", true);
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Add new sub account success.');", true);
                     }
                     else
                     {
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
                     }
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModalDuplicate('Username is duplicate.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModalDuplicate", "alertModalDuplicate('Username is duplicate.');", true);
                 }
             }
             catch (Exception ex)

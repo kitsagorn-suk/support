@@ -45,11 +45,11 @@ namespace Support_Project.Menu_Feedback
                 int _id = _sql.AddFeedback(title.Text, MessageText.Text, int.Parse(Request.Cookies["Keys"]["Agent_ID"]), int.Parse(Request.Cookies["Keys"]["ID"]));
                 if (_id != 0)
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Add new feedback success.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Add new feedback success.');", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
                 }
             }
             catch (Exception ex)

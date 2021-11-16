@@ -252,7 +252,7 @@
         var token = "";
         var TotalData;
         $(document).ready(function () {
-            $("#myModalLoad").modal();
+            //$("#myModalLoad").modal();
             $("#menuManagementMain , #menuManagementMain > a , #menuManagementShare > a").addClass("active");
             $("#menuManagementMain > div").css("display", "block");
 
@@ -267,7 +267,7 @@
 
             $("option[value='']").attr("disabled", "disabled");
 
-            GetData("load");
+            GetData("");
         });
 
         function maxLengthfield(field, maxChars) {
@@ -292,11 +292,8 @@
                 NumPage = 1;
             }
 
-            if (count == "load") {
+            if (count == "") {
                 TotalData = parseInt($("[id $= totalDocs]").val());
-            }
-            else if (count == "0") {
-                TotalData = parseInt(count);
             }
             else {
                 TotalData = parseInt(count);
@@ -315,11 +312,11 @@
                         pageSize: 100,
                         dataSource: 'https://api.flickr.com/services/feeds/photos_public.gne?tags=cat&tagmode=any&format=json&jsoncallback=?',
                         locator: 'items',
-                        <%--callback: function (response, pagination) {
+                       <%-- callback: function (response, pagination) {
                             var NumPage = container.pagination('getSelectedPageNum');
                             $("#<%=thisPage.ClientID%>").val(NumPage);
                             Search_Click("paging");
-                        }--%>
+                        },--%>
                         beforePageOnClick: function (response, pagination) {
                             NumPage = pagination;
                             $("#<%=thisPage.ClientID%>").val(NumPage);

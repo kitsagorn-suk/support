@@ -114,11 +114,11 @@ namespace Support_Project.Menu_Announcement
                 LiteralData.Text = sb.ToString();
             }
 
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "setDataLanguage();", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "setDataLanguage", "setDataLanguage();", true);
 
             if (eventPaging.Value != "paging")
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "GetData(" + _idTotal.ToString() + ");", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "GetData", "GetData(" + _idTotal.ToString() + ");", true);
             }
             }
             catch (Exception ex)

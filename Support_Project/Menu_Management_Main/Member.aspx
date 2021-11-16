@@ -362,11 +362,12 @@
     <script>
         var token = "";
         var TotalData;
+        var NumPage;
         var arrGetMemberParentID = [];
         var arrGetMemberParentName = [];
         var arrGetAgentParentID = [];
         $(document).ready(function () {
-            $("#myModalLoad").modal();
+            //$("#myModalLoad").modal();
             $("#menuManagementMain , #menuManagementMain > a , #menuManagementMember > a").addClass("active");
             $("#menuManagementMain > div").css("display", "block");
             $(".inModal > select > option[value='']").attr("disabled", "disabled");
@@ -391,43 +392,46 @@
             arrGetAgentParentID.push(parseInt($("#<%=AgentIDSearch.ClientID%>").val()));
 
             SetLan(localStorage.getItem('Language'));
-            GetData("load");
+            GetData("");
         });
 
+        function setDataLanguage() {
+            SetLan(localStorage.getItem('Language'));
+            $('#myModalLoad').modal('hide');
+        }
+
         function GetData(count) {
-            var NumPage = 1;
             if ($("[id $= thisPage]").val() == null || $("[id $= thisPage]").val() == "") {
                 NumPage = 1;
             }
 
-            if (count == "load") {
+            if (count == "") {
                 TotalData = parseInt($("[id $= totalDocs]").val());
-            }
-            else if (count == "0") {
-                TotalData = parseInt(count);
             }
             else {
                 TotalData = parseInt(count);
             }
 
+            console.log(TotalData)
             GetNumPage(NumPage);
         }
 
-        function GetNumPage(numPage) {
+        function GetNumPage(NumPage) {
             $(function () {
                 (function (name) {
                     var container = $('#pagination-' + name);
                     container.pagination({
                         totalNumber: TotalData,
-                        pageNumber: numPage,
-                        pageSize: 100,
+                        pageNumber: NumPage,
+                        pageSize: 50,
                         dataSource: 'https://api.flickr.com/services/feeds/photos_public.gne?tags=cat&tagmode=any&format=json&jsoncallback=?',
                         locator: 'items',
                         <%--callback: function (response, pagination) {
-                            var NumPage = container.pagination('getSelectedPageNum');
+                            NumPage = container.pagination('getSelectedPageNum');
                             $("#<%=thisPage.ClientID%>").val(NumPage);
-                            Search_Click("paging");
-                        }--%>
+                            $("#myModalLoad").modal("hide");
+                        },--%>
+
                         beforePageOnClick: function (response, pagination) {
                             NumPage = pagination;
                             $("#<%=thisPage.ClientID%>").val(NumPage);
@@ -488,8 +492,8 @@
         }
 
         function Search_Click(event) {
+            $("#myModalLoad").modal();
             if (event == "") {
-                $("#myModalLoad").modal();
                 $("#<%=thisPage.ClientID%>").val("1");
                 $("#<%=getParent.ClientID%>").val("No");
                 arrGetMemberParentID.length = 1;
@@ -733,11 +737,6 @@ function alertModal(txtAlert) {
 
     setTimeout(function () { $('#modalAlert').modal('hide') }, 2000);
 }
-
-        function setDataLanguage() {
-            SetLan(localStorage.getItem('Language'));
-            $('#myModalLoad').modal('hide');
-        }
 
         function disDropdown() {
             $("option[value='']").attr("disabled", "disabled");

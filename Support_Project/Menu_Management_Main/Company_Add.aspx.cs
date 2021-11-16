@@ -48,16 +48,16 @@ namespace Support_Project.Menu_Management_Main
                     int _id = _sql.AddCompany(Name.Text, Prefix.Text, Description.Text, Remark.Text, int.Parse(Request.Cookies["Keys"]["ID"]));
                     if (_id != 0)
                     {
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Add new company success.');", true);
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Add new company success.');", true);
                     }
                     else
                     {
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
                     }
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModalDuplicate('Name is duplicate.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModalDuplicate", "alertModalDuplicate('Name is duplicate.');", true);
                 }
             }
             catch (Exception ex)

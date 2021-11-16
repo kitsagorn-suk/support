@@ -274,7 +274,7 @@
         var arrGetAgentParentID = [];
         var arrGetAgentParentName = [];
         $(document).ready(function () {
-            $("#myModalLoad").modal();
+            //$("#myModalLoad").modal();
             $("#menuManagementMain , #menuManagementMain > a , #menuManagementAgent > a").addClass("active");
             $("#menuManagementMain > div").css("display", "block");
 
@@ -310,7 +310,7 @@
             arrGetAgentParentID.push(parseInt($("#<%=AgentIDSearch.ClientID%>").val()));
             arrGetAgentParentName.push($("#<%=AgentName.ClientID%>").val());
 
-            GetData("load");
+            GetData("");
         });
 
         function maxLengthfield(field, maxChars) {
@@ -328,11 +328,8 @@
                 NumPage = 1;
             }
 
-            if (count == "load") {
+            if (count == "") {
                 TotalData = parseInt($("[id $= totalDocs]").val());
-            }
-            else if (count == "0") {
-                TotalData = parseInt(count);
             }
             else {
                 TotalData = parseInt(count);

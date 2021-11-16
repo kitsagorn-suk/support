@@ -218,11 +218,11 @@ namespace Support_Project.Menu_Announcement
                 LiteralData.Text = sb.ToString();
             }
 
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "setDataLanguage();", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "setDataLanguage", "setDataLanguage();", true);
 
             if (eventPaging.Value != "paging")
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "GetData(" + _idTotal.ToString() + ");", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "GetData", "GetData(" + _idTotal.ToString() + ");", true);
             }
             }
             catch (Exception ex)
@@ -237,12 +237,12 @@ namespace Support_Project.Menu_Announcement
             int _idDel = _sql.DeleteAnnouncement(int.Parse(IDDelete.Value), int.Parse(Request.Cookies["Keys"]["ID"]));
             if (_idDel != 0)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Delete announcement success.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Delete announcement success.');", true);
                 SearchData();
             }
             else
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
             }
             }
             catch (Exception ex)
@@ -257,12 +257,12 @@ namespace Support_Project.Menu_Announcement
             int _idDel = _sql.EditImageAnnouncement(int.Parse(IDEditImage.Value), NameDeleteImage.Value);
             if (_idDel != 0)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Delete file success.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Delete file success.');", true);
                 SearchData();
             }
             else
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
             }
             }
             catch (Exception ex)
@@ -349,12 +349,12 @@ namespace Support_Project.Menu_Announcement
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
                 }
             }
             catch
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
             }
             }
             catch (Exception ex)

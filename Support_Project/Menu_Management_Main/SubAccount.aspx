@@ -307,7 +307,7 @@
         var token = "";
         var TotalData;
         $(document).ready(function () {
-            $("#myModalLoad").modal();
+            //$("#myModalLoad").modal();
             $("#menuManagementMain , #menuManagementMain > a , #menuManagementSubAccount > a").addClass("active");
             $("#menuManagementMain > div").css("display", "block");
             $(".inModal > select > option[value='']").attr("disabled", "disabled");
@@ -323,7 +323,7 @@
             $("option[value='']").attr("disabled", "disabled");
 
             SetLan(localStorage.getItem('Language'));
-            GetData("load");
+            GetData("");
         });
 
         function GetData(count) {
@@ -332,11 +332,8 @@
                 NumPage = 1;
             }
 
-            if (count == "load") {
+            if (count == "") {
                 TotalData = parseInt($("[id $= totalDocs]").val());
-            }
-            else if (count == "0") {
-                TotalData = parseInt(count);
             }
             else {
                 TotalData = parseInt(count);

@@ -744,7 +744,7 @@ namespace Support_Project.core
             return table;
         }
 
-        public DataTable getAllAgent(int pShareHolderID, string pAllAgentID, int pAgentID)
+        public DataTable getAllAgent(int pShareHolderID, String pAllAgentID, int pAgentID)
         {
             DataTable table = new DataTable();
             SQLCustomExecute sql = new SQLCustomExecute("exec get_all_agent @pShareHolderID, @pAllAgentID, @pAgentID");
@@ -753,7 +753,7 @@ namespace Support_Project.core
             paramShareHolderID.Direction = ParameterDirection.Input;
             paramShareHolderID.Value = pShareHolderID;
 
-            SqlParameter paramAllAgentID = new SqlParameter(@"pAllAgentID", SqlDbType.VarChar, 8000);
+            SqlParameter paramAllAgentID = new SqlParameter(@"pAllAgentID", SqlDbType.Text);
             paramAllAgentID.Direction = ParameterDirection.Input;
             paramAllAgentID.Value = pAllAgentID;
 
@@ -1229,7 +1229,7 @@ namespace Support_Project.core
             return id;
         }
 
-        public DataTable SearchMember(string pTextSearch, int pType, string pAllAgentID, int pShareholderID, int pPage, int pPerPage, int pUserID, int pAgentID)
+        public DataTable SearchMember(string pTextSearch, int pType, String pAllAgentID, int pShareholderID, int pPage, int pPerPage, int pUserID, int pAgentID)
         {
             DataTable table = new DataTable();
             SQLCustomExecute sql = new SQLCustomExecute("exec get_search_user_login @pTextSearch, @pType, @pAllAgentID, @pShareholderID, @pPage, @pPerPage, @pUserID, @pAgentID");
@@ -1242,7 +1242,7 @@ namespace Support_Project.core
             paramType.Direction = ParameterDirection.Input;
             paramType.Value = pType;
 
-            SqlParameter paramAllAgent = new SqlParameter(@"pAllAgentID", SqlDbType.VarChar, 8000);
+            SqlParameter paramAllAgent = new SqlParameter(@"pAllAgentID", SqlDbType.Text);
             paramAllAgent.Direction = ParameterDirection.Input;
             paramAllAgent.Value = pAllAgentID;
 
@@ -1280,7 +1280,7 @@ namespace Support_Project.core
             return table;
         }
 
-        public int SearchMemberPaging(string pTextSearch, int pType, string pAllAgentID, int pShareholderID, int pUserID, int pAgentID)
+        public int SearchMemberPaging(string pTextSearch, int pType, String pAllAgentID, int pShareholderID, int pUserID, int pAgentID)
         {
             int id = 0;
 
@@ -1295,7 +1295,7 @@ namespace Support_Project.core
             paramType.Direction = ParameterDirection.Input;
             paramType.Value = pType;
 
-            SqlParameter paramAllAgent = new SqlParameter(@"pAllAgentID", SqlDbType.VarChar, 8000);
+            SqlParameter paramAllAgent = new SqlParameter(@"pAllAgentID", SqlDbType.Text);
             paramAllAgent.Direction = ParameterDirection.Input;
             paramAllAgent.Value = pAllAgentID;
 
@@ -1329,7 +1329,7 @@ namespace Support_Project.core
             return id;
         }
 
-        public int SearchMemberSubPaging(int pUserID, string pAllAgentID, int pAgentID)
+        public int SearchMemberSubPaging(int pUserID, String pAllAgentID, int pAgentID)
         {
             int id = 0;
 
@@ -1340,7 +1340,7 @@ namespace Support_Project.core
             paramUserID.Direction = ParameterDirection.Input;
             paramUserID.Value = pUserID;
 
-            SqlParameter paramAllAgent = new SqlParameter(@"pAllAgentID", SqlDbType.VarChar, 8000);
+            SqlParameter paramAllAgent = new SqlParameter(@"pAllAgentID", SqlDbType.Text);
             paramAllAgent.Direction = ParameterDirection.Input;
             paramAllAgent.Value = pAllAgentID;
 
@@ -1363,7 +1363,7 @@ namespace Support_Project.core
             return id;
         }
 
-        public DataTable SearchMemberSub(int pUserID, string pAllAgentID, int pPage, int pPerPage, int pAgentID)
+        public DataTable SearchMemberSub(int pUserID, String pAllAgentID, int pPage, int pPerPage, int pAgentID)
         {
             DataTable table = new DataTable();
             SQLCustomExecute sql = new SQLCustomExecute("exec get_user_login_parent @pUserID, @pAllAgentID, @pPage, @pPerPage, @pAgentID");
@@ -1372,7 +1372,7 @@ namespace Support_Project.core
             paramUserID.Direction = ParameterDirection.Input;
             paramUserID.Value = pUserID;
 
-            SqlParameter paramAllAgent = new SqlParameter(@"pAllAgentID", SqlDbType.VarChar, 8000);
+            SqlParameter paramAllAgent = new SqlParameter(@"pAllAgentID", SqlDbType.Text);
             paramAllAgent.Direction = ParameterDirection.Input;
             paramAllAgent.Value = pAllAgentID;
 
@@ -2558,7 +2558,7 @@ namespace Support_Project.core
             return id;
         }
 
-        public int SearcAgentPaging(string pTextSearch, int pShareHolderID, string pAllAgentID)
+        public int SearcAgentPaging(string pTextSearch, int pShareHolderID, String pAllAgentID)
         {
             int id = 0;
 
@@ -2574,7 +2574,7 @@ namespace Support_Project.core
             paramShareHolderID.Value = pShareHolderID;
 
 
-            SqlParameter paramAllAgentID = new SqlParameter(@"pAllAgentID", SqlDbType.VarChar, 8000);
+            SqlParameter paramAllAgentID = new SqlParameter(@"pAllAgentID", SqlDbType.Text);
             paramAllAgentID.Direction = ParameterDirection.Input;
             paramAllAgentID.Value = pAllAgentID;
 
@@ -2593,7 +2593,7 @@ namespace Support_Project.core
             return id;
         }
 
-        public DataTable SearchAgent(string pTextSearch, int pShareHolderID, int pPage, int pPerPage, string pAllAgentID)
+        public DataTable SearchAgent(string pTextSearch, int pShareHolderID, int pPage, int pPerPage, String pAllAgentID)
         {
             DataTable table = new DataTable();
             SQLCustomExecute sql = new SQLCustomExecute("exec get_search_agent @pTextSearch, @pShareHolderID, @pPage, @pPerPage, @pAllAgentID");
@@ -2614,7 +2614,7 @@ namespace Support_Project.core
             paramPerPage.Direction = ParameterDirection.Input;
             paramPerPage.Value = pPerPage;
 
-            SqlParameter paramAllAgentID = new SqlParameter(@"pAllAgentID", SqlDbType.VarChar, 8000);
+            SqlParameter paramAllAgentID = new SqlParameter(@"pAllAgentID", SqlDbType.Text);
             paramAllAgentID.Direction = ParameterDirection.Input;
             paramAllAgentID.Value = pAllAgentID;
 

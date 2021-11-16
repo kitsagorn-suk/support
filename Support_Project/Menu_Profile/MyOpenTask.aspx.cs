@@ -147,7 +147,7 @@ namespace Support_Project.Menu_Profile
 
             LiteralDataAllNotification.Text = sb.ToString();
 
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "$('#myModalLoad').modal('hide');", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "HidePop", "$('#myModalLoad').modal('hide');", true);
             }
             catch (Exception ex)
             {
@@ -161,13 +161,13 @@ namespace Support_Project.Menu_Profile
             int _id = _sql.CloseMyTask(int.Parse(closeID.Value), int.Parse(Request.Cookies["Keys"]["ID"]));
             if (_id == 0)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Acknowledge your open task success.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Acknowledge your open task success.');", true);
                 //GetAllNoti();
                 Response.Redirect("../Menu_Profile/MyOpenTask.aspx");
             }
             else
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
             }
             }
             catch (Exception ex)
@@ -182,13 +182,13 @@ namespace Support_Project.Menu_Profile
             int _id = _sql.CommentMyTask(int.Parse(commentID.Value), int.Parse(Request.Cookies["Keys"]["ID"]));
             if (_id == 0)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Acknowledge your open task success.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Acknowledge your open task success.');", true);
                 //GetAllNoti();
                 Response.Redirect("../Menu_Profile/MyOpenTask.aspx");
             }
             else
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
             }
             }
             catch (Exception ex)

@@ -613,18 +613,18 @@ namespace Support_Project.Menu_Dashboard
                             }
 
                             LiteralImage.Text = sbImage.ToString();
-                            ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "clickzoom();", true);
+                            ScriptManager.RegisterStartupScript(this, this.GetType(), "clickzoom", "clickzoom();", true);
                         }
                     }
 
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "$('#modalAnnouncement').modal();", true);
                 }
 
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "$('#myModalLoad').modal('hide');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "HidePop", "$('#myModalLoad').modal('hide');", true);
 
                 if (eventPaging.Value != "paging")
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "GetData(" + _idTotal.ToString() + ");", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "GetData", "GetData(" + _idTotal.ToString() + ");", true);
                 }
              }
             catch (Exception ex)

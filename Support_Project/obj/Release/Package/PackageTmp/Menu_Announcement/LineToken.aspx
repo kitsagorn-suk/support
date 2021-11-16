@@ -217,7 +217,7 @@
     <script src="../js/pagination.js"></script>
     <script>
         $(document).ready(function () {
-            $("#myModalLoad").modal();
+            //$("#myModalLoad").modal();
             $("#menuAnnouncement , #menuAnnouncement > a , #menuLineToken > a").addClass("active");
             $("#menuAnnouncement > div").css("display", "block");
 

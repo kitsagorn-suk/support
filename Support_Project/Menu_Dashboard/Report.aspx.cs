@@ -378,11 +378,11 @@ namespace Support_Project.Menu_Dasboard
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "$('#tbData > thead > tr > th:nth-child(14) , #tbData > tbody > tr > td:nth-child(14), #tbData > tfoot > tr > td:nth-child(14)').css('display', 'none');", true);
                 }
 
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "setDataLanguage();", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "setDataLanguage", "setDataLanguage();", true);
 
                 if (eventPaging.Value != "paging")
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "GetData(" + _idTotal.ToString() + ");", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "GetData", "GetData(" + _idTotal.ToString() + ");", true);
                 }
             }
             catch (Exception ex)
@@ -508,12 +508,12 @@ namespace Support_Project.Menu_Dasboard
                     }
                     else
                     {
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
                     }
                 }
                 catch
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
                 }
             } 
             catch (Exception ex)
@@ -529,12 +529,12 @@ namespace Support_Project.Menu_Dasboard
             int _id = _sql.AddPickup(int.Parse(pickupID.Value), int.Parse(Request.Cookies["Keys"]["ID"]), pickupDate.Value);
             if (_id != 0)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Pickup dashboard success.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Pickup dashboard success.');", true);
                 SearchData("");
             }
             else
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
             }
             }
             catch (Exception ex)
@@ -550,12 +550,12 @@ namespace Support_Project.Menu_Dasboard
                 int _id = _sql.CloseDashboard(int.Parse(closeID.Value), int.Parse(Request.Cookies["Keys"]["ID"]));
                 if (_id != 0)
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Close dashboard success.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Close dashboard success.');", true);
                     SearchData("");
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
                 }
             }
             catch (Exception ex)
@@ -571,12 +571,12 @@ namespace Support_Project.Menu_Dasboard
                 int _id = _sql.CancelDashboard(int.Parse(cancelID.Value), int.Parse(Request.Cookies["Keys"]["ID"]));
                 if (_id != 0)
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Cancel dashboard success.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Cancel dashboard success.');", true);
                     SearchData("");
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
                 }
             }
             catch (Exception ex)
@@ -673,7 +673,7 @@ namespace Support_Project.Menu_Dasboard
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "$('#tbData > thead > tr > th:nth-child(14) , #tbData > tbody > tr > td:nth-child(14), #tbData > tfoot > tr > td:nth-child(14)').css('display', 'none');", true);
             }
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "GetImageChat();", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "GetImageChat", "GetImageChat();", true);
             }
             catch (Exception ex)
             {
@@ -699,7 +699,7 @@ namespace Support_Project.Menu_Dasboard
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
                 }
             }
 
@@ -720,7 +720,7 @@ namespace Support_Project.Menu_Dasboard
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
                 }
             }
 
@@ -741,7 +741,7 @@ namespace Support_Project.Menu_Dasboard
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
                 }
             }
 
@@ -762,7 +762,7 @@ namespace Support_Project.Menu_Dasboard
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
                 }
             }
 
@@ -783,7 +783,7 @@ namespace Support_Project.Menu_Dasboard
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
                 }
             }
 
@@ -804,7 +804,7 @@ namespace Support_Project.Menu_Dasboard
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
                 }
             }
 
@@ -814,7 +814,7 @@ namespace Support_Project.Menu_Dasboard
                 {
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "$('#tbData > thead > tr > th:nth-child(14) , #tbData > tbody > tr > td:nth-child(14), #tbData > tfoot > tr > td:nth-child(14)').css('display', 'none');", true);
                 }
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "alertModal('Chat dashboard success.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Chat dashboard success.');", true);
             }
             }
             catch (Exception ex)
@@ -830,12 +830,12 @@ namespace Support_Project.Menu_Dasboard
                 int _id = _sql.CancelChat(int.Parse(cancelChatID.Value));
                 if (_id != 0)
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Unsend chat success.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Unsend chat success.');", true);
                     GetChatData("");
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
                 }
             }
             catch (Exception ex)

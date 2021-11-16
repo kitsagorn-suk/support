@@ -1169,11 +1169,10 @@
                         pageSize: 50,
                         dataSource: 'https://api.flickr.com/services/feeds/photos_public.gne?tags=cat&tagmode=any&format=json&jsoncallback=?',
                         locator: 'items',
-                        <%--callback: function (response, pagination) {
+                       <%-- callback: function (response, pagination) {
                             NumPage = container.pagination('getSelectedPageNum');
                             $("#<%=thisPage.ClientID%>").val(NumPage);
-                            Search_Click("paging");
-                        }--%>
+                        },--%>
 
                         beforePageOnClick: function (response, pagination) {
                             NumPage = pagination;

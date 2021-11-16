@@ -556,7 +556,7 @@
                 this.setAttribute('style', 'height:100px;');
             });
 
-            $("#myModalLoad").modal();
+            //$("#myModalLoad").modal();
             $("#menuAnnouncement , #menuAnnouncement > a , #menuAnnouncementAll > a").addClass("active");
             $("#menuAnnouncement > div").css("display", "block");
 

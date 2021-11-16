@@ -84,7 +84,7 @@ namespace Support_Project.Menu_Management_Main
                     itemAgent.Attributes["set-lan"] = "text:Select agent";
                 }
 
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "disDropdown();", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "disDropdown", "disDropdown();", true);
             }
             catch (Exception ex)
             {
@@ -103,7 +103,7 @@ namespace Support_Project.Menu_Management_Main
             ListItem item = ddlAgent.Items[0];
             item.Attributes["set-lan"] = "text:Select agent";
 
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "disDropdown();", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "disDropdown", "disDropdown();", true);
         }
 
         public void AddMember_click(Object sender, EventArgs e)
@@ -116,16 +116,16 @@ namespace Support_Project.Menu_Management_Main
                     int _id = _sql.AddMember(username.Text, Utility.Encryptdata2(password.Text), int.Parse(LevelAdd.Value), contact.Text, int.Parse(Request.Cookies["Keys"]["ID"]), name.Text, int.Parse(CompanyAdd.Value), int.Parse(AgentAdd.Value));
                     if (_id != 0)
                     {
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Add new account success.');", true);
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Add new account success.');", true);
                     }
                     else
                     {
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
                     }
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModalDuplicate('Username is duplicate.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModalDuplicate", "alertModalDuplicate('Username is duplicate.');", true);
                 }
             }
             catch (Exception ex)

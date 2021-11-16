@@ -48,21 +48,21 @@ namespace Support_Project.Menu_Announcement
                     int _id = _sql.AddLineToken(NameGroup.Text, Token.Text, int.Parse(Request.Cookies["Keys"]["ID"]));
                     if (_id != 0)
                     {
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Add new line token success.');", true);
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Add new line token success.');", true);
                     }
                     else
                     {
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
                     }
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModalDuplicate('Name group is duplicate.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModalDuplicate", "alertModalDuplicate('Name group is duplicate.');", true);
                 }
             }
             catch
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
             }
         }
     }

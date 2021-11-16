@@ -70,7 +70,7 @@ namespace Support_Project.Menu_Feedback
                 ListItem item = ddlAgentSearch.Items[0];
                 item.Attributes["set-lan"] = "text:All";
 
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "SetLan(localStorage.getItem('Language'));", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "SetLan", "SetLan(localStorage.getItem('Language'));", true);
             }
             catch (Exception ex)
             {
@@ -126,8 +126,8 @@ namespace Support_Project.Menu_Feedback
                 LiteralData.Text = sb.ToString();
             }
 
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "$('#myModalLoad').modal('hide');", true);
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "hideDropdown()", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "HidePop", "$('#myModalLoad').modal('hide');", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "hideDropdown", "hideDropdown()", true);
             }
             catch (Exception ex)
             {

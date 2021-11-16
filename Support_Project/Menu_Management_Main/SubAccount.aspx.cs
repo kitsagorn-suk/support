@@ -64,7 +64,7 @@ namespace Support_Project.Menu_Management_Main
                 ddllevelSearch.DataBind();
                 ddllevelSearch.Items.Insert(0, new ListItem("All", "0"));
 
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "SetLan(localStorage.getItem('Language'));", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "SetLan", "SetLan(localStorage.getItem('Language'));", true);
             }
             catch (Exception ex)
             {
@@ -78,12 +78,12 @@ namespace Support_Project.Menu_Management_Main
             int _idDel = _sql.DeleteMember(int.Parse(IDDelete.Value), int.Parse(Request.Cookies["Keys"]["ID"]));
             if (_idDel != 0)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Delete sub account success.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Delete sub account success.');", true);
                 SearchData();
             }
             else
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
             }
             }
             catch (Exception ex)
@@ -101,17 +101,17 @@ namespace Support_Project.Menu_Management_Main
                 int _id = _sql.EditMember(int.Parse(IDEdit.Value), username.Text, Utility.Encryptdata2(password.Text), int.Parse(LevelEdit.Value), contact.Text, int.Parse(Request.Cookies["Keys"]["ID"]), int.Parse(StatusEdit.Value), name.Text, int.Parse(Request.Cookies["Keys"]["Company_ID"]), int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
                 if (_id != 0)
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "alertModal('Edit sub account success.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Edit sub account success.');", true);
                     SearchData();
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
                 }
             }
             else
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModalDuplicate('Username is duplicate.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModalDuplicate", "alertModalDuplicate('Username is duplicate.');", true);
             }
             }
             catch (Exception ex)
@@ -222,10 +222,10 @@ namespace Support_Project.Menu_Management_Main
 
             if (eventPaging.Value != "paging")
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "GetData('" + _idTotal.ToString() + "');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "GetData", "GetData('" + _idTotal.ToString() + "');", true);
             }
 
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "setDataLanguage();", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "setDataLanguage", "setDataLanguage();", true);
             }
             catch (Exception ex)
             {

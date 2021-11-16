@@ -361,7 +361,7 @@
         var startDateSearch = "";
         var endDateSearch = "";
         $(document).ready(function () {
-            $("#myModalLoad").modal();
+            //$("#myModalLoad").modal();
             $("#menuAnnouncement , #menuAnnouncement > a , #AnnouncementLine > a").addClass("active");
             $("#menuAnnouncement > div").css("display", "block");
 

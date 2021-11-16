@@ -129,10 +129,10 @@ namespace Support_Project.Menu_Management_Main
 
             if (eventPaging.Value != "paging")
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "GetData('" + _idTotal.ToString() + "');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "GetData", "GetData('" + _idTotal.ToString() + "');", true);
             }
 
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "setDataLanguage();", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "setDataLanguage", "setDataLanguage();", true);
             }
             catch (Exception ex)
             {
@@ -146,12 +146,12 @@ namespace Support_Project.Menu_Management_Main
             int _idDel = _sql.DeleteCompany(int.Parse(IDDelete.Value), int.Parse(Request.Cookies["Keys"]["ID"]));
             if (_idDel != 0)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Delete company success.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Delete company success.');", true);
                 SearchData();
             }
             else
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
             }
             }
             catch (Exception ex)
@@ -169,17 +169,17 @@ namespace Support_Project.Menu_Management_Main
                 int _id = _sql.EditCompany(int.Parse(IDEdit.Value), Name.Text, Prefix.Text, Description.Text, Remark.Text, int.Parse(Request.Cookies["Keys"]["ID"]));
                 if (_id != 0)
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Edit company success.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Edit company success.');", true);
                     SearchData();
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModal('Data recording failed.');", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModal", "alertModal('Data recording failed.');", true);
                 }
             }
             else
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModalDuplicate('Name is duplicate.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModalDuplicate", "alertModalDuplicate('Name is duplicate.');", true);
             }
             }
             catch (Exception ex)

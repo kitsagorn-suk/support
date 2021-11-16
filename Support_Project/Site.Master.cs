@@ -81,11 +81,11 @@ namespace Support_Project
             int _idDel = _sql.LockAgent(int.Parse(Request.Cookies["Keys"]["Agent_ID"]), int.Parse(Request.Cookies["Keys"]["ID"]));
             if (_idDel != 0)
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModalEmer('Lock agent success.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModalEmer", "alertModalEmer('Lock agent success.');", true);
             }
             else
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "function", "alertModalEmer('Data recording failed.');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertModalEmer", "alertModalEmer('Data recording failed.');", true);
             }
         }
 
