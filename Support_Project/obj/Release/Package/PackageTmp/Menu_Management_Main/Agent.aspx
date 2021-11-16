@@ -351,11 +351,34 @@
                         pageSize: 100,
                         dataSource: 'https://api.flickr.com/services/feeds/photos_public.gne?tags=cat&tagmode=any&format=json&jsoncallback=?',
                         locator: 'items',
-                        callback: function (response, pagination) {
+                        <%-- callback: function (response, pagination) {
                             var NumPage = container.pagination('getSelectedPageNum');
                             $("#<%=thisPage.ClientID%>").val(NumPage);
                             Search_Click("paging");
-                        }
+                        }--%>
+                        beforePageOnClick: function (response, pagination) {
+                            NumPage = pagination;
+                            $("#<%=thisPage.ClientID%>").val(NumPage);
+                        },
+                        afterPageOnClick: function (response, pagination) {
+                            Search_Click("paging");
+                        },
+
+                        beforeNextOnClick: function (response, pagination) {
+                            NumPage = pagination;
+                            $("#<%=thisPage.ClientID%>").val(NumPage);
+                        },
+                        afterNextOnClick: function (response, pagination) {
+                            Search_Click("paging");
+                        },
+
+                        beforePreviousOnClick: function (response, pagination) {
+                            NumPage = pagination;
+                            $("#<%=thisPage.ClientID%>").val(NumPage);
+                        },
+                        afterPreviousOnClick: function (response, pagination) {
+                            Search_Click("paging");
+                        },
                     });
                 })('demo2');
             });

@@ -14,6 +14,7 @@ namespace Support_Project.Menu_Management_Main
     public partial class Agent : System.Web.UI.Page
     {
         SqlManager _sql = new SqlManager();
+        String allagentmaster = "";
         public static string PageNow;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -31,6 +32,7 @@ namespace Support_Project.Menu_Management_Main
 
                 if (status == true)
                 {
+                    allagentmaster = _sql.allAgentMaster();
                     BindCompany();
                     CompanySearch.Value = Request.Cookies["Keys"]["Company_ID"];
                     ShareIDLogin.Value = Request.Cookies["Keys"]["Company_ID"];
@@ -44,7 +46,6 @@ namespace Support_Project.Menu_Management_Main
                         AgentName.Value = Request.Cookies["Keys"]["Agent_Name"];
                     }
 
-                    //getParent.Value = "No";
                     SearchData();
                     PageNow = "1";
                 }
@@ -89,7 +90,7 @@ namespace Support_Project.Menu_Management_Main
             try { 
             if (getParent.Value == "No")
             {
-                AgentIDSearch.Value = _sql.allAgentMaster();
+                AgentIDSearch.Value = allagentmaster;
             }
 
             if (searchName.Text == "" && getParent.Value == "No")

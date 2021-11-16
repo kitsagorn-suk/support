@@ -15,6 +15,7 @@ namespace Support_Project.Menu_Management_Main
     {
         SqlManager _sql = new SqlManager();
         public static string PageNow;
+        String allagentmaster = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -31,6 +32,7 @@ namespace Support_Project.Menu_Management_Main
 
                 if (status == true)
                 {
+                    allagentmaster = _sql.allAgentMaster();
                     LevelSearch.Value = "0";
                     MemberIDSearch.Value = Request.Cookies["Keys"]["ID"];
                     MemberName.Value = Request.Cookies["Keys"]["Username"];
@@ -54,7 +56,7 @@ namespace Support_Project.Menu_Management_Main
                         ddllevelSearch.Items.Insert(0, new ListItem("All", "0"));
 
                         ddlAgentSearch.Items.Clear();
-                        ddlAgentSearch.DataSource = _sql.getAllAgent(int.Parse(Request.Cookies["Keys"]["Company_ID"].ToString()), _sql.allAgentMaster(), int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
+                        ddlAgentSearch.DataSource = _sql.getAllAgent(int.Parse(Request.Cookies["Keys"]["Company_ID"].ToString()), allagentmaster, int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
                         ddlAgentSearch.DataBind();
                         ddlAgentSearch.Items.Insert(0, new ListItem("All", "0"));
                         //ddlAgentSearch.SelectedValue = Request.Cookies["Keys"]["Agent_ID"].ToString();
@@ -65,7 +67,6 @@ namespace Support_Project.Menu_Management_Main
                     ShareIDLogin.Value = Request.Cookies["Keys"]["Company_ID"];
                     AgentIDLogin.Value = Request.Cookies["Keys"]["Agent_ID"];
                     PageNow = "1";
-
                     SearchData();
                 }
                 else
@@ -115,7 +116,7 @@ namespace Support_Project.Menu_Management_Main
             ddlCompany.DataBind();
             ddlCompany.Items.Insert(0, new ListItem("Select company", ""));
 
-            ddlAgent.DataSource = _sql.getAllAgent(int.Parse(CompanyView.Value), _sql.allAgentMaster(), int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
+            ddlAgent.DataSource = _sql.getAllAgent(int.Parse(CompanyView.Value), allagentmaster, int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
             ddlAgent.DataBind();
             ddlAgent.Items.Insert(0, new ListItem("Select agent", ""));
 
@@ -126,7 +127,7 @@ namespace Support_Project.Menu_Management_Main
         {
             ddlAgentSearch.Items.Clear();
 
-            ddlAgentSearch.DataSource = _sql.getAllAgent(int.Parse(ddlCompanySearch.SelectedValue), _sql.allAgentMaster(), int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
+            ddlAgentSearch.DataSource = _sql.getAllAgent(int.Parse(ddlCompanySearch.SelectedValue), allagentmaster, int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
             ddlAgentSearch.DataBind();
             ddlAgentSearch.Items.Insert(0, new ListItem("All", "0"));
 
@@ -137,7 +138,7 @@ namespace Support_Project.Menu_Management_Main
         {
             ddlAgent.Items.Clear();
 
-            ddlAgent.DataSource = _sql.getAllAgent(int.Parse(ddlCompany.SelectedValue), _sql.allAgentMaster(), int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
+            ddlAgent.DataSource = _sql.getAllAgent(int.Parse(ddlCompany.SelectedValue), allagentmaster, int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
             ddlAgent.DataBind();
             ddlAgent.Items.Insert(0, new ListItem("Select agent", ""));
 
@@ -245,7 +246,7 @@ namespace Support_Project.Menu_Management_Main
             if (searchUsername.Text != "")
             {
                 //AgentSearch.Value = Request.Cookies["Keys"]["Agent_ID"];
-                masterAgent = _sql.allAgentMaster();
+                masterAgent = allagentmaster;
             }
             else
             {

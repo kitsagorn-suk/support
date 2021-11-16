@@ -18,6 +18,7 @@ namespace Support_Project.Menu_Feedback
     {
         SqlManager _sql = new SqlManager();
         public static string PageNow;
+        String allagentmaster = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -34,6 +35,7 @@ namespace Support_Project.Menu_Feedback
 
                 if (status == true)
                 {
+                    allagentmaster = _sql.allAgentMaster();
                     BindAgent();
                     AgentID.Value = Request.Cookies["Keys"]["Agent_ID"];
 
@@ -48,7 +50,6 @@ namespace Support_Project.Menu_Feedback
                     
                     searchDateStart.Value = DateTime.Now.ToString("yyyy-MM-dd") + " 00:00:00";
                     searchDateTo.Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-
                     SearchData();
                 }
                 else
@@ -62,7 +63,7 @@ namespace Support_Project.Menu_Feedback
         {
             try
             {
-                ddlAgentSearch.DataSource = _sql.getAllAgent(int.Parse(Request.Cookies["Keys"]["Company_ID"]), _sql.allAgentMaster(), int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
+                ddlAgentSearch.DataSource = _sql.getAllAgent(int.Parse(Request.Cookies["Keys"]["Company_ID"]), allagentmaster, int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
                 ddlAgentSearch.DataBind();
                 ddlAgentSearch.Items.Insert(0, new ListItem("All", "0"));
 

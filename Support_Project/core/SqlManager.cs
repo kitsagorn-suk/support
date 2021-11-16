@@ -18,20 +18,31 @@ namespace Support_Project.core
 
         public List<String> getAgent(int agentID)
         {
-            var arrAgent = new List<String>();
+            List<String> arrAgent = new List<String>();
             DataTable tableAgent = new DataTable();
             tableAgent = GetMasterAgent(agentID);
             if (tableAgent.Rows.Count > 0 && tableAgent != null)
             {
-                foreach (DataRow row in tableAgent.Rows)
+                for (var i = 1; i <= tableAgent.Rows.Count; i++)
                 {
+                    DataRow row = tableAgent.Rows[i];
                     arrAgent.Add(row["id"].ToString());
-                    var total = getAgent(int.Parse(row["id"].ToString()));
-                    foreach (String item in total)
-                    {
-                        arrAgent.Add(item);
-                    }
+                    List<String> total = getAgent(int.Parse(row["id"].ToString()));
+                        for (var j = 1; j <= total.Count; j++)
+                        {
+                            arrAgent.Add(total[i]);
+                        }
                 }
+
+                //    foreach (DataRow row in tableAgent.Rows)
+                //{
+                //    arrAgent.Add(row["id"].ToString());
+                //    List<String> total = getAgent(int.Parse(row["id"].ToString()));
+                //    foreach (String item in total)
+                //    {
+                //        arrAgent.Add(item);
+                //    }
+                //}
             }
 
             return arrAgent;
@@ -41,22 +52,34 @@ namespace Support_Project.core
         {
 
             var arrAgentMasterAll = "";
-            var arrAgentMaster = new List<String>();
+            List<String> arrAgentMaster = new List<String>();
             DataTable tableAgent = new DataTable();
             tableAgent = GetMasterAgent(int.Parse(System.Web.HttpContext.Current.Request.Cookies["Keys"]["Agent_ID"]));
             if (tableAgent.Rows.Count > 0 && tableAgent != null)
             {
                 try
                 {
-                    foreach (DataRow row in tableAgent.Rows)
+
+                    for (var i = 1; i <= tableAgent.Rows.Count; i++)
                     {
+                        DataRow row = tableAgent.Rows[i];
                         arrAgentMaster.Add(row["id"].ToString());
-                        var total = getAgent(int.Parse(row["id"].ToString()));
-                        foreach (String item in total)
-                        {
-                            arrAgentMaster.Add(item);
-                        }
+                        List<String> total = getAgent(int.Parse(row["id"].ToString()));
+                            for (var j = 1; j <= total.Count; j++)
+                            {
+                                arrAgentMaster.Add(total[j]);
+                            }
                     }
+
+                    //foreach (DataRow row in tableAgent.Rows)
+                    //{
+                    //    arrAgentMaster.Add(row["id"].ToString());
+                    //    List<String> total = getAgent(int.Parse(row["id"].ToString()));
+                    //    foreach (String item in total)
+                    //    {
+                    //        arrAgentMaster.Add(item);
+                    //    }
+                    //}
                 }
                 catch(Exception ex)
                 {

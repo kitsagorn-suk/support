@@ -17,7 +17,7 @@ namespace Support_Project.Menu_Announcement
     public partial class Announcement : System.Web.UI.Page
     {
         SqlManager _sql = new SqlManager();
-
+        String allagentmaster = "";
         public static string PageNow;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -35,6 +35,7 @@ namespace Support_Project.Menu_Announcement
 
                 if (status == true)
                 {
+                    allagentmaster = _sql.allAgentMaster();
                     BindAgent();
                     AgentID.Value = Request.Cookies["Keys"]["Agent_ID"];
 
@@ -55,7 +56,7 @@ namespace Support_Project.Menu_Announcement
         {
             try
             {
-                ddlAgent.DataSource = _sql.getAllAgent(int.Parse(Request.Cookies["Keys"]["Company_ID"]), _sql.allAgentMaster(), int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
+                ddlAgent.DataSource = _sql.getAllAgent(int.Parse(Request.Cookies["Keys"]["Company_ID"]), allagentmaster, int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
                 ddlAgent.DataBind();
                 ddlAgent.Items.Insert(0, new ListItem("Select agent", ""));
                 ddlAgent.Items.Insert(1, new ListItem("All", "0"));
@@ -66,7 +67,7 @@ namespace Support_Project.Menu_Announcement
                 ListItem item2 = ddlAgent.Items[1];
                 item2.Attributes["set-lan"] = "text:All";
 
-                ddlAgentSearch.DataSource = _sql.getAllAgent(int.Parse(Request.Cookies["Keys"]["Company_ID"]), _sql.allAgentMaster(), int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
+                ddlAgentSearch.DataSource = _sql.getAllAgent(int.Parse(Request.Cookies["Keys"]["Company_ID"]), allagentmaster, int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
                 ddlAgentSearch.DataBind();
                 ddlAgentSearch.Items.Insert(0, new ListItem("All", "0"));
 

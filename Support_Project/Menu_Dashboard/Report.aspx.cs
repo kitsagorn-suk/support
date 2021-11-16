@@ -18,6 +18,7 @@ namespace Support_Project.Menu_Dasboard
     public partial class Report : System.Web.UI.Page
     {
         SqlManager _sql = new SqlManager();
+        String allagentmaster = "";
         public static string PageNow;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -35,6 +36,8 @@ namespace Support_Project.Menu_Dasboard
 
                 if (status == true)
                 {
+                    allagentmaster = _sql.allAgentMaster();
+
                     DataTable dtddlRole = new DataTable();
                     dtddlRole.Columns.Add(new DataColumn("nameRole"));
                     dtddlRole.Columns.Add(new DataColumn("idRole"));
@@ -50,6 +53,7 @@ namespace Support_Project.Menu_Dasboard
                     CategorySearch.Value = "0";
                     searchDateStart.Value = DateTime.Now.ToString("yyyy-MM-dd") + " 00:00:00";
                     searchDateTo.Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                   
                     SearchData("");
 
                     //int second = 20 * 1000;
@@ -82,7 +86,7 @@ namespace Support_Project.Menu_Dasboard
                 }
 
                 int _idTotal = 0;
-                _idTotal = _sql.SearchDashboardPaging(searchProduct.Text, int.Parse(MyTask.Value), searchDateStart.Value, searchDateTo.Value, int.Parse(CategorySearch.Value), StatusSearch.Value, int.Parse(Request.Cookies["Keys"]["Agent_ID"]), _sql.allAgentMaster());
+                _idTotal = _sql.SearchDashboardPaging(searchProduct.Text, int.Parse(MyTask.Value), searchDateStart.Value, searchDateTo.Value, int.Parse(CategorySearch.Value), StatusSearch.Value, int.Parse(Request.Cookies["Keys"]["Agent_ID"]), allagentmaster);
                 totalDocs.Value = _idTotal.ToString();
 
                 if (thisPage.Value == "" || thisPage.Value == null)
@@ -95,7 +99,7 @@ namespace Support_Project.Menu_Dasboard
                 }
 
                 string perPage = WebConfigurationManager.AppSettings["perPage"];
-                table = _sql.SearchDashboard(searchProduct.Text, int.Parse(MyTask.Value), searchDateStart.Value, searchDateTo.Value, int.Parse(CategorySearch.Value), StatusSearch.Value, int.Parse(Request.Cookies["Keys"]["Agent_ID"]), int.Parse(PageNow), int.Parse(perPage), _sql.allAgentMaster());
+                table = _sql.SearchDashboard(searchProduct.Text, int.Parse(MyTask.Value), searchDateStart.Value, searchDateTo.Value, int.Parse(CategorySearch.Value), StatusSearch.Value, int.Parse(Request.Cookies["Keys"]["Agent_ID"]), int.Parse(PageNow), int.Parse(perPage), allagentmaster);
                 if (table != null && table.Rows.Count > 0)
                 {
                     var i = 1;

@@ -15,6 +15,7 @@ namespace Support_Project.Menu_Management_Main
     public partial class Member_Add : System.Web.UI.Page
     {
         SqlManager _sql = new SqlManager();
+        String allagentmaster = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -31,6 +32,7 @@ namespace Support_Project.Menu_Management_Main
 
                 if (status == true)
                 {
+                    allagentmaster = _sql.allAgentMaster();
                     BindLevel();
 
                     LevelSearch.Value = "0";
@@ -74,7 +76,7 @@ namespace Support_Project.Menu_Management_Main
 
                     ddlAgent.Items.Clear();
 
-                    ddlAgent.DataSource = _sql.getAllAgent(int.Parse(Request.Cookies["Keys"]["Company_ID"]), _sql.allAgentMaster(), int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
+                    ddlAgent.DataSource = _sql.getAllAgent(int.Parse(Request.Cookies["Keys"]["Company_ID"]), allagentmaster, int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
                     ddlAgent.DataBind();
                     ddlAgent.Items.Insert(0, new ListItem("Select agent", ""));
 
@@ -94,7 +96,7 @@ namespace Support_Project.Menu_Management_Main
         {
             ddlAgent.Items.Clear();
 
-            ddlAgent.DataSource = _sql.getAllAgent(int.Parse(ddlCompany.SelectedValue), _sql.allAgentMaster(), int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
+            ddlAgent.DataSource = _sql.getAllAgent(int.Parse(ddlCompany.SelectedValue), allagentmaster, int.Parse(Request.Cookies["Keys"]["Agent_ID"]));
             ddlAgent.DataBind();
             ddlAgent.Items.Insert(0, new ListItem("Select agent", ""));
 

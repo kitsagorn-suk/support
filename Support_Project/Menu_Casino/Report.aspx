@@ -976,10 +976,30 @@
                         pageSize: 100,
                         dataSource: 'https://api.flickr.com/services/feeds/photos_public.gne?tags=cat&tagmode=any&format=json&jsoncallback=?',
                         locator: 'items',
-                        callback: function (response, pagination) {
-                            NumPage = container.pagination('getSelectedPageNum');
+                        //callback: function (response, pagination) {
+                        //    NumPage = container.pagination('getSelectedPageNum');
+                        //    GetData2(TotalData, NumPage);
+                        //}
+                        beforePageOnClick: function (response, pagination) {
+                            NumPage = pagination;
+                        },
+                        afterPageOnClick: function (response, pagination) {
                             GetData2(TotalData, NumPage);
-                        }
+                        },
+
+                        beforeNextOnClick: function (response, pagination) {
+                            NumPage = pagination;
+                        },
+                        afterNextOnClick: function (response, pagination) {
+                            GetData2(TotalData, NumPage);
+                        },
+
+                        beforePreviousOnClick: function (response, pagination) {
+                            NumPage = pagination;
+                        },
+                        afterPreviousOnClick: function (response, pagination) {
+                            GetData2(TotalData, NumPage);
+                        },
                     });
                 })('demo2');
             });
