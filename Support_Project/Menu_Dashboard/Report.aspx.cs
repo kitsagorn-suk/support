@@ -18,7 +18,7 @@ namespace Support_Project.Menu_Dasboard
     public partial class Report : System.Web.UI.Page
     {
         SqlManager _sql = new SqlManager();
-        String allagentmaster = "";
+        public static String allagentmaster = "";
         public static string PageNow;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -71,6 +71,7 @@ namespace Support_Project.Menu_Dasboard
 
         public void Search_click(Object sender, EventArgs e)
         {
+            allagentmaster = _sql.allAgentMaster();
             SearchData("");
         }
 
