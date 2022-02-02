@@ -1298,6 +1298,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="core\LogManager.cs" />
     <Compile Include="Menu_Announcement\LineToken_Add.aspx.cs">
       <DependentUpon>LineToken_Add.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1553,6 +1554,7 @@
       <DependentUpon>Timeline_Add.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LogModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>

@@ -75,7 +75,7 @@ namespace Support_Project
                             try
                             {
                                 var request = (HttpWebRequest)WebRequest.Create("https://notify-api.line.me/api/notify");
-                                var postData = string.Format("message={0}", description.Text);
+                                var postData = string.Format("message={0}", description.Text.Replace("%", "%25"));
 
                                 if (allFileAttach != "")
                                 {
@@ -97,7 +97,8 @@ namespace Support_Project
                             }
                             catch (Exception ex)
                             {
-                                Response.Write(ex.ToString());
+                                    LogManager.ServiceLog.WriteExceptionLog(ex, "AddAnnouncement_click");
+                                    Response.Write(ex.ToString());
                             }
                         }
                     }
