@@ -94,7 +94,8 @@ namespace Support_Project
                                 using (var stream = request.GetRequestStream()) stream.Write(data, 0, data.Length);
                                 var response = (HttpWebResponse)request.GetResponse();
                                 var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-                            }
+                                    LogManager.ServiceLog.WriteExceptionLogString(responseString.ToString(), "AddAnnouncement_click");
+                                }
                             catch (Exception ex)
                             {
                                     LogManager.ServiceLog.WriteExceptionLog(ex, "AddAnnouncement_click");

@@ -36,7 +36,7 @@ namespace Support_Project.Menu_Dasboard
 
                 if (status == true)
                 {
-                    allagentmaster = _sql.allAgentMaster();
+                    //allagentmaster = _sql.allAgentMaster();
 
                     DataTable dtddlRole = new DataTable();
                     dtddlRole.Columns.Add(new DataColumn("nameRole"));
@@ -78,6 +78,8 @@ namespace Support_Project.Menu_Dasboard
         {
             try
             {
+                allagentmaster = _sql.allAgentMaster();
+
                 DateTime datetimenow = DateTime.Now;
                 DataTable table = new DataTable();
                 if (MyTask.Value == "Yes")
