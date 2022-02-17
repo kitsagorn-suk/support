@@ -559,3 +559,4 @@ D:\_WorkNok\support\Support_Project\bin\Microsoft.Owin.Security.OAuth.xml
 D:\_WorkNok\support\Support_Project\obj\Debug\Support_Project.csproj.CopyComplete
 D:\_WorkNok\support\Support_Project\obj\Debug\Support_Project.dll
 D:\_WorkNok\support\Support_Project\obj\Debug\Support_Project.pdb
+D:\_WorkNok\support\Support_Project\obj\Debug\Support_Project.csprojAssemblyReference.cache
