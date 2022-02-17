@@ -476,6 +476,7 @@ C:\Support_PT\Support_Project\bin\Google.Authenticator.dll
 C:\Support_PT\Support_Project\bin\QRCoder.dll
 C:\Support_PT\Support_Project\bin\Google.Authenticator.pdb
 C:\Support_PT\Support_Project\obj\Debug\Support_Project.csprojResolveAssemblyReference.cache
+D:\_WorkNok\support\Support_Project\obj\Debug\Support_Project.csproj.CoreCompileInputs.cache
 D:\_WorkNok\support\Support_Project\bin\ApplicationInsights.config
 D:\_WorkNok\support\Support_Project\bin\roslyn\csc.exe
 D:\_WorkNok\support\Support_Project\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -555,8 +556,6 @@ D:\_WorkNok\support\Support_Project\bin\Microsoft.Owin.Security.Google.xml
 D:\_WorkNok\support\Support_Project\bin\Microsoft.Owin.Security.Twitter.xml
 D:\_WorkNok\support\Support_Project\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\_WorkNok\support\Support_Project\bin\Microsoft.Owin.Security.OAuth.xml
-D:\_WorkNok\support\Support_Project\obj\Debug\Support_Project.csprojAssemblyReference.cache
-D:\_WorkNok\support\Support_Project\obj\Debug\Support_Project.csproj.CoreCompileInputs.cache
 D:\_WorkNok\support\Support_Project\obj\Debug\Support_Project.csproj.CopyComplete
 D:\_WorkNok\support\Support_Project\obj\Debug\Support_Project.dll
 D:\_WorkNok\support\Support_Project\obj\Debug\Support_Project.pdb
