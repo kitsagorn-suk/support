@@ -18,7 +18,7 @@ namespace Support_Project.Menu_Dasboard
     public partial class Report : System.Web.UI.Page
     {
         SqlManager _sql = new SqlManager();
-        public static String allagentmaster = "";
+        String allagentmaster = "";
         public static string PageNow;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -36,7 +36,7 @@ namespace Support_Project.Menu_Dasboard
 
                 if (status == true)
                 {
-                    allagentmaster = _sql.allAgentMaster();
+                    //allagentmaster = _sql.allAgentMaster();
 
                     DataTable dtddlRole = new DataTable();
                     dtddlRole.Columns.Add(new DataColumn("nameRole"));
@@ -71,7 +71,6 @@ namespace Support_Project.Menu_Dasboard
 
         public void Search_click(Object sender, EventArgs e)
         {
-            allagentmaster = _sql.allAgentMaster();
             SearchData("");
         }
 
@@ -79,6 +78,8 @@ namespace Support_Project.Menu_Dasboard
         {
             try
             {
+                allagentmaster = _sql.allAgentMaster();
+
                 DateTime datetimenow = DateTime.Now;
                 DataTable table = new DataTable();
                 if (MyTask.Value == "Yes")

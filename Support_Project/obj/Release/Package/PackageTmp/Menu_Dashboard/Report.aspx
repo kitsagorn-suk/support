@@ -1265,6 +1265,10 @@
                 $("#todate").val(date);
                 start = date;
                 end = date;
+                $('#starttime').val('00:00');
+                var dates = new Date();
+                var currenttime = ("0" + dates.getHours()).slice(-2) + ":" + ("0" + dates.getMinutes()).slice(-2);
+                $('#totime').val(currenttime);
                 typeTime = "Day";
             }
             else if (type == "Yesterday") {
@@ -1277,6 +1281,8 @@
                 $("#todate").val(yesterdayString);
                 start = yesterdayString;
                 end = yesterdayString;
+                $('#starttime').val('00:00')
+                $('#totime').val('23:59')
                 typeTime = "Day";
             }
             else if (type == "This week") {
@@ -1288,6 +1294,8 @@
                 var endDate = date2.getFullYear() + "-" + ("0" + (date2.getMonth() + 1)).slice(-2) + "-" + ("0" + date2.getDate()).slice(-2);
                 $("#startdate").val(startDate);
                 $("#todate").val(endDate);
+                $('#starttime').val('00:00')
+                $('#totime').val('23:59')
                 start = startDate;
                 end = endDate;
                 typeTime = "Week";
@@ -1301,6 +1309,8 @@
                 var endDate = date2.getFullYear() + "-" + ("0" + (date2.getMonth() + 1)).slice(-2) + "-" + ("0" + date2.getDate()).slice(-2);
                 $("#startdate").val(startDate);
                 $("#todate").val(endDate);
+                $('#starttime').val('00:00')
+                $('#totime').val('23:59')
                 start = startDate;
                 end = endDate;
                 typeTime = "Week";
@@ -1323,6 +1333,8 @@
                 var endDate = date2.getFullYear() + "-" + ("0" + (date2.getMonth() + 1)).slice(-2) + "-" + ("0" + date2.getDate()).slice(-2);
                 $("#startdate").val(startDate);
                 $("#todate").val(endDate);
+                $('#starttime').val('00:00')
+                $('#totime').val('23:59')
                 start = startDate;
                 end = endDate;
                 typeTime = "Month";
@@ -1332,6 +1344,14 @@
                 this.setAttribute(
                     "data-date",
                     moment(this.value, "YYYY-MM-DD")
+                    .format(this.getAttribute("data-date-format"))
+                )
+            }).trigger("change")
+
+            $("input[type=time]").on("change", function () {
+                this.setAttribute(
+                    "data-date",
+                    moment(this.value, "hh:mm A")
                     .format(this.getAttribute("data-date-format"))
                 )
             }).trigger("change")
@@ -1429,6 +1449,9 @@
                     .format(this.getAttribute("data-date-format"))
                 )
             }).trigger("change")
+
+            $('#starttime').val('00:00')
+            $('#totime').val('23:59')
 
             startDateSearch = start;
             endDateSearch = end;

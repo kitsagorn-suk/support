@@ -75,7 +75,8 @@ namespace Support_Project
                             try
                             {
                                 var request = (HttpWebRequest)WebRequest.Create("https://notify-api.line.me/api/notify");
-                                var postData = string.Format("message={0}", description.Text.Replace("",""));
+
+                                var postData = string.Format("message={0}", description.Text.Replace("%", "%25"));
 
                                 if (allFileAttach != "")
                                 {
@@ -95,7 +96,8 @@ namespace Support_Project
                                 using (var stream = request.GetRequestStream()) stream.Write(data, 0, data.Length);
                                 var response = (HttpWebResponse)request.GetResponse();
                                 var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-                            }
+                                    LogManager.ServiceLog.WriteExceptionLogString(responseString.ToString(), "AddAnnouncement_click");
+                                }
                             catch (Exception ex)
                             {
                                     LogManager.ServiceLog.WriteExceptionLog(ex, "AddAnnouncement_click");

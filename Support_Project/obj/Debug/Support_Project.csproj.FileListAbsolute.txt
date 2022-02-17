@@ -476,6 +476,7 @@ C:\Support_PT\Support_Project\bin\Google.Authenticator.dll
 C:\Support_PT\Support_Project\bin\QRCoder.dll
 C:\Support_PT\Support_Project\bin\Google.Authenticator.pdb
 C:\Support_PT\Support_Project\obj\Debug\Support_Project.csprojResolveAssemblyReference.cache
+
 D:\_WorkNok\support\Support_Project\obj\Debug\Support_Project.csproj.CoreCompileInputs.cache
 D:\_WorkNok\support\Support_Project\bin\ApplicationInsights.config
 D:\_WorkNok\support\Support_Project\bin\roslyn\csc.exe

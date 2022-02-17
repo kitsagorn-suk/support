@@ -49,7 +49,6 @@ namespace Support_Project.Models
             }
         }
 
-
         public void WriteCustomLog(string customString, string description)
         {
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US", false);
